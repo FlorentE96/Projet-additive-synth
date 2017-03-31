@@ -25,18 +25,18 @@ public:
   void setReleaseTime(float _releaseTime);
   void setReleaseSlope(float _releaseSlope);
   void setSustainLevel(float _sustainLevel);
-  float getAttackTime();
-  float getAttackSlope();
-  float getDecayTime();
-  float getDecaySlope();
-  float getReleaseTime();
-  float getReleaseSlope();
-  float getSustainLevel();
-  State getState();
-  float getValue();
-  
-  float process();
-  void reset();
+  float getAttackTime(void);
+  float getAttackSlope(void);
+  float getDecayTime(void);
+  float getDecaySlope(void);
+  float getReleaseTime(void);
+  float getReleaseSlope(void);
+  float getSustainLevel(void);
+  State getState(void);
+  float getValue(void);
+
+  float process(void);
+  void reset(void);
   void gate(int state);
 
 

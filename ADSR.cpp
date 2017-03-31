@@ -22,7 +22,7 @@ ADSR::ADSR(float attack, float decay, float sustain, float release) {
   reset();
 }
 
-ADSR::~ADSR() {
+ADSR::~ADSR(void) {
   //
 }
 
@@ -98,43 +98,43 @@ void ADSR::setSustainLevel(float _sustainLevel) {
   sustainLevel = _sustainLevel;
 }
 
-float ADSR::getAttackTime() {
+float ADSR::getAttackTime(void) {
   return attackTime;
 }
 
-float ADSR::getAttackSlope() {
+float ADSR::getAttackSlope(void) {
   return attackTarget;
 }
 
-float ADSR::getDecayTime() {
+float ADSR::getDecayTime(void) {
   return decayTime;
 }
 
-float ADSR::getDecaySlope() {
+float ADSR::getDecaySlope(void) {
   return decayTarget;
 }
 
-float ADSR::getReleaseTime() {
+float ADSR::getReleaseTime(void) {
   return releaseTime;
 }
 
-float ADSR::getReleaseSlope() {
+float ADSR::getReleaseSlope(void) {
   return releaseTarget;
 }
 
-float ADSR::getSustainLevel() {
+float ADSR::getSustainLevel(void) {
   return sustainLevel;
 }
 
-State ADSR::getState() {
+State ADSR::getState(void) {
   return state;
 }
 
-float ADSR::getValue() {
+float ADSR::getValue(void) {
   return value;
 }
 
-float ADSR::process() {
+float ADSR::process(void) {
   switch (state) {
     case stateIdle:
       break;
@@ -169,7 +169,7 @@ float ADSR::process() {
   return value;
 }
 
-void ADSR::reset() {
+void ADSR::reset(void) {
   value = 0.0f;
   state = stateIdle;
 }
