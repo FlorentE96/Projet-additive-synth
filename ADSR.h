@@ -1,17 +1,17 @@
 #ifndef ADSR_H
 #define ADSR_H
 
+typedef enum
+{
+    stateIdle = 0,
+    stateAttack,
+    stateDecay,
+    stateSustain,
+    stateRelease
+} State;
+
 class ADSR {
 public:
-  typedef enum
-  {
-  		stateIdle = 0,
-  		stateAttack,
-  		stateDecay,
-  		stateSustain,
-  		stateRelease
-  } State;
-
   ADSR();
   ADSR(float attack, float decay, float sustain, float release);
   ~ADSR();
@@ -33,7 +33,8 @@ public:
   float getReleaseSlope();
   float getSustainLevel();
   State getState();
-
+  float getValue();
+  
   float process();
   void reset();
   void gate(int state);
