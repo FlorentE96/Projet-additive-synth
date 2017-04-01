@@ -53,7 +53,6 @@ void ADSR::setDecay(float _decayTime, float _decayTarget) {
   decayRate = _decayTime * SAMPLE_RATE; // decay rate in samples
   decayCoef = exp(-log((1.0f + _decayTarget) / _decayTarget) / decayRate);
   decayBase = (sustainLevel - _decayTarget) * (1.0f - decayCoef);
-  cout << sustainLevel << endl;
 }
 
 void ADSR::setDecayTime(float _decayTime) {
@@ -141,16 +140,13 @@ float ADSR::process(void) {
     case stateAttack:
       value = attackBase + value * attackCoef;
       if(value >= 1.0f) {
-        cout << "Finished attack" << endl;
         value = 1.0f;
         state = stateDecay;
       }
       break;
     case stateDecay:
       value = decayBase + value * decayCoef;
-      //cout << decayBase << " " << decayCoef << endl;
       if(value <= sustainLevel) {
-        cout << "Finished decay" << endl;
         value = sustainLevel;
         state = stateSustain;
       }
@@ -160,7 +156,6 @@ float ADSR::process(void) {
     case stateRelease:
       value = releaseBase + value * releaseCoef;
       if(value <= 0.0f) {
-        cout << "Finished release" << endl;
         value = 0.0f;
         state = stateIdle;
       }

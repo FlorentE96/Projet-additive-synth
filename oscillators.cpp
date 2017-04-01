@@ -48,3 +48,21 @@ int16_t Osc::linearInterpolation() {
   int16_t sample1 = wavetable[intPart]; //second sample
   return sample0 + (sample1 - sample0) * fracPart; //interpolation
 }
+
+int main(void)
+{
+  float _length = 0.5f; // 1.8s of "sound"
+  Osc sine_osc(wavetable_saw3, 440);
+  ofstream outputFile;
+  outputFile.open("out_wt.csv", std::ofstream::out | std::ofstream::trunc);
+  if (outputFile.is_open())
+  {
+      for(int i=0; i<(int)(_length*SAMPLE_RATE); i++) // main sample calculation loop
+      {
+        outputFile << sine_osc.process() << endl;
+      }
+  }
+  else
+    cout << "Impossible d'ouvrir le fichier " << endl;
+
+}
