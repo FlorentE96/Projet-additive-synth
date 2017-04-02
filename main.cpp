@@ -1,27 +1,53 @@
+#include "mainwindow.h"
+#include <QApplication>
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include "global.h"
-#include "ADSR.h"
+#include <cstdint>
+#include "global.hpp"
+#include "oscillators.hpp"
+#include "LUTs.hpp"
+using namespace std;
 
-int main(void)
+int main(int argc, char *argv[])
 {
-  float _length = 1.8f; // 1.8s of "sound"
-  ADSR env1(0.3f, 0.5f, 0.8f, 0.5f);
-  ofstream outputFile;
-  outputFile.open("out.txt", std::ofstream::out | std::ofstream::trunc);
-  if (outputFile.is_open())
-  {
-      for(int i=0; i<(int)(_length*SAMPLE_RATE); i++) // main sample calculation loop
-      {
-        if(i == (int)(0.1*SAMPLE_RATE)) // at 0.1s
-          env1.gate(ON); // gate the envelope on
-        if(i == (int)(1.0*SAMPLE_RATE)) // at 1.0s
-          env1.gate(OFF); // gate the envelope off
-        outputFile << env1.process() << endl;
-      }
-  }
-  else
-    cout << "Impossible d'ouvrir le fichier " << endl;
-
+//    QApplication a(argc, argv);
+//    MainWindow w;
+//    w.show();
+    float _length = 0.5f; // 1.8s of "sound"
+    Osc sine_osc(wavetable_saw3, DEFAULT_FREQ);
+    ofstream outputFile;
+    outputFile.open("out_wt.csv", std::ofstream::out | std::ofstream::trunc);
+    if (outputFile.is_open())
+    {
+        cout << "Fichier ouvert..." << endl;
+        for(int i=0; i<(int)(_length*SAMPLE_RATE); i++) // main sample calculation loop
+        {
+          outputFile << sine_osc.process() << endl;
+        }
+    }
+    else
+      cout << "Impossible d'ouvrir le fichier " << endl;
+//    return a.exec();
 }
+
+
+
+//int main(int argc, char* argv[]){
+
+//  Filter myFilter(BPF, 1764, 1.0f, 100, 2, SAMPLE_RATE);
+
+//  /*for (int i = 0; i < 6; i++) {
+//    cout << myLPF.getCoeff(i)/myLPF.getCoeff(3) << endl;
+//  }*/
+//  int lenArray = getLenArrayFromFile(argv[1]);
+//  int16_t inputArray[lenArray];
+//  loadArrayFromFile(argv[1], inputArray, lenArray);
+
+
+//  int16_t outputArray[lenArray];
+//  myFilter.filterCompute(inputArray, outputArray, lenArray);
+//  saveArrayToFile(argv[2], outputArray, lenArray);
+
+//  return 0;
+//}
