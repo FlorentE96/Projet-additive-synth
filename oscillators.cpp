@@ -9,9 +9,9 @@ using namespace std;
 
 Osc::Osc() {
   phase = 0;
-  frequency = 440;
+  frequency = DEFAULT_FREQUENCY;
   value = 0;
-  wavetable = wavetable_sine;
+  wavetable = DEFAULT_WF;
 }
 
 Osc::Osc(int16_t * _wavetable, uint32_t _frequency) {
@@ -52,7 +52,7 @@ int16_t Osc::linearInterpolation() {
 int main(void)
 {
   float _length = 0.5f; // 1.8s of "sound"
-  Osc sine_osc(wavetable_saw3, 440);
+  Osc sine_osc(wavetable_saw3, DEFAULT_FREQ);
   ofstream outputFile;
   outputFile.open("out_wt.csv", std::ofstream::out | std::ofstream::trunc);
   if (outputFile.is_open())

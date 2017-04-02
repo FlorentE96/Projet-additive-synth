@@ -66,8 +66,4 @@ public:
   //other functions
   void filterCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen);
 
-
-
-
-
 };

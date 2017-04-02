@@ -6,19 +6,18 @@
 using namespace std;
 
 ADSR::ADSR() {
-  setSustainLevel(0.8f);
-  setAttack(0.01f, 0.001f);
-  setDecay(0.2f, 0.001f);
-  setRelease(0.5f, 0.001f);
+  setSustainLevel(DEFAULT_SUSTAIN);
+  setAttack(DEFAULT_ATTACK, DEFAULT_SLOPE);
+  setDecay(DEFAULT_DECAY, DEFAULT_SLOPE);
+  setRelease(DEFAULT_RELEASE, DEFAULT_SLOPE);
   reset();
 }
 
 ADSR::ADSR(float attack, float decay, float sustain, float release) {
-  setSustainLevel(0.8f);
-  setAttack(attack, 0.001f);
-  setDecay(decay, 0.001f);
+  setAttack(attack, DEFAULT_SLOPE);
+  setDecay(decay, DEFAULT_SLOPE);
   setSustainLevel(sustain);
-  setRelease(release, 0.001f);
+  setRelease(release, DEFAULT_SLOPE);
   reset();
 }
 

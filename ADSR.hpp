@@ -1,6 +1,13 @@
 #ifndef ADSR_H
 #define ADSR_H
 
+#define DEFAULT_SUSTAIN (0.8f)
+#define DEFAULT_SLOPE   (0.01f)
+#define DEFAULT_ATTACK  (0.01f)
+#define DEFAULT_DECAY   (0.2f)
+#define DEFAULT_RELEASE (0.5f)
+
+
 typedef enum
 {
     stateIdle = 0,
