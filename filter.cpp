@@ -1,5 +1,6 @@
-#include "filter.h"
+#include "filter.hpp"
 
+// ************ TODO : verify designed filter **********************************
 
 void Filter::setType(filtType newFilterType){
   filterType = newFilterType;
@@ -39,7 +40,12 @@ uint32_t Filter::getOrder(){
   return order;
 }
 
+float Filter::getCoeff(uint32_t i){
+  return coeff[i];
+}
+
 void Filter::DesignLPF(void){
+
   coeff[0] = 0.5f*(1.0f-cos(wc));
   coeff[1] = 1.0f-cos(wc);
   coeff[2] = coeff[0];
@@ -49,9 +55,23 @@ void Filter::DesignLPF(void){
 }
 
 void Filter::DesignHPF(void){
+
+  coeff[0] = 0.5f*(1.0f+cos(wc));
+  coeff[1] = -1.0f-cos(wc);
+  coeff[2] = coeff[0];
+  coeff[3] = 1.0f + alpha;
+  coeff[4] = -2.0f*cos(wc);
+  coeff[5] = 1.0f - alpha;
 }
 
 void Filter::DesignBPF(void){
+
+  coeff[0] = Q*alpha;
+  coeff[1] = 0.0f;
+  coeff[2] = -coeff[0];
+  coeff[3] = 1.0f + alpha;
+  coeff[4] = -2.0f*cos(wc);
+  coeff[5] = 1.0f - alpha;
 }
 
 Filter::Filter(uint32_t _Fs){
@@ -67,7 +87,7 @@ Filter::Filter(uint32_t _Fs){
   DesignLPF();
 
 }
-Filter::Filter(filtType _filterType, uint32_t _Fc, uint32_t _Fs, uint32_t _order, float _Q){
+Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order, uint32_t _Fs ){
   setOrder(_order);
   setFc(_Fc);
   setQ(_Q);
@@ -78,26 +98,39 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, uint32_t _Fs, uint32_t _order
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
   alpha = 0.5f*( sin(wc / Q ));
 
-  switch(_filterType){
+  /*switch(_filterType){
     case LPF :
+      cout << "LPF" << endl;
       DesignLPF();
     case HPF :
+    cout << "HPF" << endl;
       DesignHPF();
+  }*/
+
+  if(filterType == LPF){
+    cout << "LPF" << endl;
+    DesignLPF();
+  }
+  else if(filterType == HPF){
+    cout << "HPF" << endl;
+    DesignHPF();
   }
 }
 
-Filter::Filter(filtType _filterType, uint32_t _Fc, uint32_t _Fs, uint32_t _order, uint32_t _bw){
+Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order, uint32_t _Fs){
   setOrder(_order);
   setFc(_Fc);
   setBandwidth(_bw);
   setType(_filterType);
   setFs(_Fs);
+  setQ(_Q);
   // set intermediate variables
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha =  sin(wc)*sinh(0.5f*log(2)*bw*(wc/sin(wc)));
+  alpha =  sin(wc)*sinh(0.5f*log(2.0f)*bw*(wc/sin(wc)));
 
   switch(_filterType){
     case BPF :
+      cout << "BPF" << endl;
       DesignBPF();
   }
 }
@@ -108,12 +141,88 @@ Filter::~Filter(){
 
 
 
-int main(void){
-  Filter myLPF(SAMPLE_RATE);
-  myLPF.coeff[0] = 0.3f;
-  for (int i = 0; i < 6; i++) {
-    cout << myLPF.coeff[i] << endl;
+void Filter::filterCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen){
+  for(int i = 0; i < iLen; i++){
+      if(i<2){
+        oarray[i] = 0;
+      }
+      else {
+        oarray[i] =(uint16_t)( (coeff[0]/coeff[3])*iarray[i] + (coeff[1]/coeff[3])*iarray[i-1] + (coeff[2]/coeff[3])*iarray[i-2] - (coeff[4]/coeff[3])*oarray[i-1] - (coeff[5]/coeff[3])*oarray[i-2] );
+      }
+
   }
-  cout << myLPF.wc << " | "<< myLPF.alpha << endl;
+
+}
+bool loadArrayFromFile(const char* filename, int16_t* array, uint32_t lenArray){
+
+    string STRING;
+    ifstream file;
+    file.open(filename);
+    if(file.is_open()){
+        for (int i = 0; i < lenArray; i++) {
+          getline(file,STRING);
+          array[i] = (int16_t)atoi(STRING.c_str());
+        }
+        file.close();
+        return true;
+    }
+    else{
+        return false;
+    }
+
+
+}
+
+int getLenArrayFromFile(const char* filename){
+  string STRING;
+  ifstream file;
+  file.open(filename);
+  if(file.is_open()){
+      int i = 0;
+      while(file.eof() == 0){
+        getline(file,STRING);
+        i++;
+      }
+      file.close();
+      return i;
+  }
+}
+
+
+bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray){
+
+    ofstream file;
+    file.open(filename);
+    file.flush();
+    if(file.is_open()){
+        for (int i = 0; i < lenArray -1; i++) {
+          file <<  array[i] << endl;
+        }
+        file.close();
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+
+int main(int argc, char* argv[]){
+
+  Filter myFilter(BPF, 1764, 1.0f, 100, 2, SAMPLE_RATE);
+
+  /*for (int i = 0; i < 6; i++) {
+    cout << myLPF.getCoeff(i)/myLPF.getCoeff(3) << endl;
+  }*/
+  int lenArray = getLenArrayFromFile(argv[1]);
+  int16_t inputArray[lenArray];
+  loadArrayFromFile(argv[1], inputArray, lenArray);
+
+
+  int16_t outputArray[lenArray];
+  myFilter.filterCompute(inputArray, outputArray, lenArray);
+  saveArrayToFile(argv[2], outputArray, lenArray);
+
   return 0;
 }

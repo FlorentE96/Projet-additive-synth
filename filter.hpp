@@ -1,7 +1,10 @@
 #include <cstdint>
 #include <cmath>
-#include "global.h"
+#include "global.hpp"
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <stdlib.h>
 
 #define DEFAULT_FC (1000)
 #define DEFAULT_Q (1.0f)
@@ -16,13 +19,15 @@ enum filtType {LPF, HPF, BPF};
 class Filter{
 private:
 
-
+  float coeff[6];   //6 coefficients for biquad filter design
   filtType filterType; //lowpass, bandpass, highpass
   uint32_t Fc; //cut-off frequency or center frequency for BPF case
   uint32_t Fs; //sampling frequency
   uint32_t bw;
   uint32_t order; //filter order (2 or 4)
   float Q; //quality factor
+  float alpha;
+  float wc; //normalized cut-off frequency
 
   // filling filter coefficients array regarding filter type and parameters given
   void DesignLPF(void);
@@ -32,14 +37,12 @@ private:
 
 
 public:
-    float coeff[6];   //6 coefficients for biquad filter design
-    float alpha;
-    float wc; //normalized cut-off frequency
+
   //constructors
   Filter(uint32_t _Fs);
 
-  Filter(filtType _filterType, uint32_t _Fc, uint32_t _Fs, uint32_t _order, float _Q);
-  Filter(filtType _filterType, uint32_t _Fc, uint32_t _Fs, uint32_t _order, uint32_t _bw);
+  Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order, uint32_t _Fs);
+  Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order, uint32_t _Fs);
 
 
   //destructors
@@ -58,11 +61,11 @@ public:
   uint32_t getBandwidth();
   float getQ();
   uint32_t getOrder();
+  float getCoeff(uint32_t i);
 
   //other functions
-  /*uint16_t filterCompute(uint16_t sampledata);
-  bool saveArrayToFile(const char* filename, uint16_t* values, int values_len);
-  bool loadArrayFromFile(const char* filename, uint16_t* values, int values_len);*/
+  void filterCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen);
+
 
 
 
