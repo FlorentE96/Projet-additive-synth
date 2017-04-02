@@ -1,15 +1,12 @@
 #include <cmath>
-#include <iostream>
-#include <fstream>
 #include <cstdint>
-#include "global.h"
-#include "oscillators.h"
-#include "LUTs.h"
-using namespace std;
+#include "global.hpp"
+#include "LUTs.hpp"
+#include "oscillators.hpp"
 
 Osc::Osc() {
   phase = 0;
-  frequency = DEFAULT_FREQUENCY;
+  frequency = DEFAULT_FREQ;
   value = 0;
   wavetable = DEFAULT_WF;
 }
@@ -49,20 +46,3 @@ int16_t Osc::linearInterpolation() {
   return sample0 + (sample1 - sample0) * fracPart; //interpolation
 }
 
-int main(void)
-{
-  float _length = 0.5f; // 1.8s of "sound"
-  Osc sine_osc(wavetable_saw3, DEFAULT_FREQ);
-  ofstream outputFile;
-  outputFile.open("out_wt.csv", std::ofstream::out | std::ofstream::trunc);
-  if (outputFile.is_open())
-  {
-      for(int i=0; i<(int)(_length*SAMPLE_RATE); i++) // main sample calculation loop
-      {
-        outputFile << sine_osc.process() << endl;
-      }
-  }
-  else
-    cout << "Impossible d'ouvrir le fichier " << endl;
-
-}

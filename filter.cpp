@@ -108,11 +108,9 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order, ui
   }*/
 
   if(filterType == LPF){
-    cout << "LPF" << endl;
     DesignLPF();
   }
   else if(filterType == HPF){
-    cout << "HPF" << endl;
     DesignHPF();
   }
 }
@@ -130,7 +128,6 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint3
 
   switch(_filterType){
     case BPF :
-      cout << "BPF" << endl;
       DesignBPF();
   }
 }
@@ -142,7 +139,7 @@ Filter::~Filter(){
 
 
 void Filter::filterCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen){
-  for(int i = 0; i < iLen; i++){
+  for(uint32_t i = 0; i < iLen; i++){
       if(i<2){
         oarray[i] = 0;
       }
@@ -159,7 +156,7 @@ bool loadArrayFromFile(const char* filename, int16_t* array, uint32_t lenArray){
     ifstream file;
     file.open(filename);
     if(file.is_open()){
-        for (int i = 0; i < lenArray; i++) {
+        for (uint32_t i = 0; i < lenArray; i++) {
           getline(file,STRING);
           array[i] = (int16_t)atoi(STRING.c_str());
         }
@@ -169,7 +166,6 @@ bool loadArrayFromFile(const char* filename, int16_t* array, uint32_t lenArray){
     else{
         return false;
     }
-
 
 }
 
@@ -186,6 +182,7 @@ int getLenArrayFromFile(const char* filename){
       file.close();
       return i;
   }
+  return -1;
 }
 
 
@@ -195,7 +192,7 @@ bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray){
     file.open(filename);
     file.flush();
     if(file.is_open()){
-        for (int i = 0; i < lenArray -1; i++) {
+        for (uint32_t i = 0; i < lenArray -1; i++) {
           file <<  array[i] << endl;
         }
         file.close();
@@ -207,22 +204,3 @@ bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray){
 }
 
 
-
-int main(int argc, char* argv[]){
-
-  Filter myFilter(BPF, 1764, 1.0f, 100, 2, SAMPLE_RATE);
-
-  /*for (int i = 0; i < 6; i++) {
-    cout << myLPF.getCoeff(i)/myLPF.getCoeff(3) << endl;
-  }*/
-  int lenArray = getLenArrayFromFile(argv[1]);
-  int16_t inputArray[lenArray];
-  loadArrayFromFile(argv[1], inputArray, lenArray);
-
-
-  int16_t outputArray[lenArray];
-  myFilter.filterCompute(inputArray, outputArray, lenArray);
-  saveArrayToFile(argv[2], outputArray, lenArray);
-
-  return 0;
-}

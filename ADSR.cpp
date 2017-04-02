@@ -1,8 +1,8 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include "global.h"
-#include "ADSR.h"
+#include "global.hpp"
+#include "ADSR.hpp"
 using namespace std;
 
 ADSR::ADSR() {
