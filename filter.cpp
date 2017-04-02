@@ -17,8 +17,8 @@ void Filter::setQ(float newQ){
 void Filter::setOrder(uint32_t newOrder){
   order = newOrder;
 }
-void Filter::setFs(uint32_t newFs){
-  Fs = newFs;
+void Filter::setFs(){
+  Fs = SAMPLE_RATE;
 }
 
 
@@ -74,12 +74,12 @@ void Filter::DesignBPF(void){
   coeff[5] = 1.0f - alpha;
 }
 
-Filter::Filter(uint32_t _Fs){
+Filter::Filter(){
   setOrder(DEFAULT_ORDER);
   setFc(DEFAULT_FC);
   setQ(DEFAULT_Q);
   setType(LPF);
-  setFs(_Fs);
+  setFs();
 
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
   alpha = 0.5f*( sin(wc / Q ));
@@ -87,12 +87,12 @@ Filter::Filter(uint32_t _Fs){
   DesignLPF();
 
 }
-Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order, uint32_t _Fs ){
+Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order ){
   setOrder(_order);
   setFc(_Fc);
   setQ(_Q);
   setType(_filterType);
-  setFs(_Fs);
+  setFs();
   // set intermediate variables
 
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
@@ -115,13 +115,14 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order, ui
   }
 }
 
-Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order, uint32_t _Fs){
+Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order){
   setOrder(_order);
   setFc(_Fc);
+  setQ(_Q);
   setBandwidth(_bw);
   setType(_filterType);
-  setFs(_Fs);
-  setQ(_Q);
+  setFs();
+
   // set intermediate variables
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
   alpha =  sin(wc)*sinh(0.5f*log(2.0f)*bw*(wc/sin(wc)));
@@ -138,7 +139,7 @@ Filter::~Filter(){
 
 
 
-void Filter::filterCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen){
+void Filter::filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen){
   for(uint32_t i = 0; i < iLen; i++){
       if(i<2){
         oarray[i] = 0;
@@ -150,6 +151,28 @@ void Filter::filterCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen){
   }
 
 }
+
+uint16_t Filter::filterCompute(uint16_t idata){
+  uint16_t result = 0;
+  static uint16_t inputs[2];
+  static uint16_t outputs[2];
+  static int i = 0;
+
+  if (i < 2 ){
+    outputs[i] = 0;
+    inputs[i] = idata;
+    i++;
+  }
+  else{
+    result = (uint16_t)( (coeff[0]/coeff[3])*idata + (coeff[1]/coeff[3])*inputs[1] + (coeff[2]/coeff[3])*inputs[0] - (coeff[4]/coeff[3])*outputs[1] - (coeff[5]/coeff[3])*outputs[0] );
+    outputs[0] = outputs[1];
+    outputs[1] = result;
+    inputs[0] = inputs[1];
+    inputs[1] = idata;
+  }
+  return result;
+}
+
 bool loadArrayFromFile(const char* filename, int16_t* array, uint32_t lenArray){
 
     string STRING;
@@ -203,4 +226,20 @@ bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray){
     }
 }
 
+int main(int argc, char* argv[]){
 
+  Filter myFilter(LPF, 2000, 1.0f, 2);
+
+  int lenArray = getLenArrayFromFile(argv[1]);
+  int16_t inputArray[lenArray];
+  loadArrayFromFile(argv[1], inputArray, lenArray);
+
+
+  int16_t outputArray[lenArray];
+  for (int i = 0; i < lenArray; i++) {
+    outputArray[i] = myFilter.filterCompute(inputArray[i]);
+  }
+  saveArrayToFile(argv[2], outputArray, lenArray);
+
+  return 0;
+}

@@ -33,16 +33,16 @@ private:
   void DesignLPF(void);
   void DesignHPF(void);
   void DesignBPF(void);
-  void setFs(uint32_t NewFs);
+  void setFs();
 
 
 public:
 
   //constructors
-  Filter(uint32_t _Fs);
+  Filter();
 
-  Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order, uint32_t _Fs);
-  Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order, uint32_t _Fs);
+  Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order);
+  Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order);
 
 
   //destructors
@@ -64,6 +64,7 @@ public:
   float getCoeff(uint32_t i);
 
   //other functions
-  void filterCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen);
+  void filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen);
+  uint16_t filterCompute(uint16_t idata);
 
 };
