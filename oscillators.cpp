@@ -36,7 +36,7 @@ void Osc::reset() {
 }
 
 void Osc::setFrequency(uint32_t _frequency) {
-
+    frequency = _frequency;
 }
 
 int16_t Osc::linearInterpolation() {

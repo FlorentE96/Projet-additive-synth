@@ -10,7 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //osc1_ptr = new Osc(wavetable_saw3, DEFAULT_FREQ);
+    osc1_ptr = new Osc(wavetable_saw3, DEFAULT_FREQ);
+    ui->oscPitchDial->setMaximum(3000);
+    ui->oscPitchDial->setMinimum(50);
 }
 
 MainWindow::~MainWindow()
@@ -20,5 +22,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_oscPitchDial_sliderMoved(int position)
 {
-    //osc1_ptr->setFrequency(oscPitchDial->);
+    osc1_ptr->setFrequency(position);
 }

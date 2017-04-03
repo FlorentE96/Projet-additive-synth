@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "oscillators.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -20,7 +21,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    //Osc* osc1_ptr;
+    Osc* osc1_ptr;
 };
 
 #endif // MAINWINDOW_H
