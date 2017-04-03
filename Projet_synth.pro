@@ -38,3 +38,6 @@ HEADERS  += mainwindow.h \
     oscillators.hpp
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    values

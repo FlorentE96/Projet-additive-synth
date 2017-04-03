@@ -65,6 +65,10 @@ public:
 
   //other functions
   void filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen);
-  uint16_t filterCompute(uint16_t idata);
+  int16_t filterCompute(int16_t idata);
 
 };
+
+bool loadArrayFromFile(const char* filename, int16_t* array, uint32_t lenArray);
+int getLenArrayFromFile(const char* filename);
+bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray);

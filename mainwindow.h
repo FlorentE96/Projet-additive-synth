@@ -15,8 +15,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_oscPitchDial_sliderMoved(int position);
+
 private:
     Ui::MainWindow *ui;
+    //Osc* osc1_ptr;
 };
 
 #endif // MAINWINDOW_H

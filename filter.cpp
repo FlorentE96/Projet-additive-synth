@@ -145,17 +145,18 @@ void Filter::filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen)
         oarray[i] = 0;
       }
       else {
-        oarray[i] =(uint16_t)( (coeff[0]/coeff[3])*iarray[i] + (coeff[1]/coeff[3])*iarray[i-1] + (coeff[2]/coeff[3])*iarray[i-2] - (coeff[4]/coeff[3])*oarray[i-1] - (coeff[5]/coeff[3])*oarray[i-2] );
+        cout << "oarray[i] = " << oarray[i] << " | oarray[i-1] = " << oarray[i-1] << " | oarray[i-2] = " << oarray[i-2] << endl;
+        oarray[i] =(int16_t)( (coeff[0]/coeff[3])*iarray[i] + (coeff[1]/coeff[3])*iarray[i-1] + (coeff[2]/coeff[3])*iarray[i-2] - (coeff[4]/coeff[3])*oarray[i-1] - (coeff[5]/coeff[3])*oarray[i-2] );
       }
 
   }
 
 }
 
-uint16_t Filter::filterCompute(uint16_t idata){
-  uint16_t result = 0;
-  static uint16_t inputs[2];
-  static uint16_t outputs[2];
+int16_t Filter::filterCompute(int16_t idata){
+  int16_t result = 0;
+  static int16_t inputs[2];
+  static int16_t outputs[2];
   static int i = 0;
 
   if (i < 2 ){
@@ -164,7 +165,8 @@ uint16_t Filter::filterCompute(uint16_t idata){
     i++;
   }
   else{
-    result = (uint16_t)( (coeff[0]/coeff[3])*idata + (coeff[1]/coeff[3])*inputs[1] + (coeff[2]/coeff[3])*inputs[0] - (coeff[4]/coeff[3])*outputs[1] - (coeff[5]/coeff[3])*outputs[0] );
+    result = (int16_t)( (coeff[0]/coeff[3])*idata + (coeff[1]/coeff[3])*inputs[1] + (coeff[2]/coeff[3])*inputs[0] - (coeff[4]/coeff[3])*outputs[1] - (coeff[5]/coeff[3])*outputs[0] );
+    cout << "output = " << result << "| oarray[i-1] = " << outputs[1] << "| oarray[i-2] = " << outputs[0] << endl;
     outputs[0] = outputs[1];
     outputs[1] = result;
     inputs[0] = inputs[1];
@@ -205,6 +207,7 @@ int getLenArrayFromFile(const char* filename){
       file.close();
       return i;
   }
+  cout << "Erreur d'ouverture fichier" << endl;
   return -1;
 }
 
@@ -226,20 +229,20 @@ bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray){
     }
 }
 
-int main(int argc, char* argv[]){
+//int main(int argc, char* argv[]){
 
-  Filter myFilter(LPF, 2000, 1.0f, 2);
+//  Filter myFilter(LPF, 2000, 1.0f, 2);
 
-  int lenArray = getLenArrayFromFile(argv[1]);
-  int16_t inputArray[lenArray];
-  loadArrayFromFile(argv[1], inputArray, lenArray);
+//  int lenArray = getLenArrayFromFile(argv[1]);
+//  int16_t inputArray[lenArray];
+//  loadArrayFromFile(argv[1], inputArray, lenArray);
 
 
-  int16_t outputArray[lenArray];
-  for (int i = 0; i < lenArray; i++) {
-    outputArray[i] = myFilter.filterCompute(inputArray[i]);
-  }
-  saveArrayToFile(argv[2], outputArray, lenArray);
+//  int16_t outputArray[lenArray];
+//  for (int i = 0; i < lenArray; i++) {
+//    outputArray[i] = myFilter.filterCompute(inputArray[i]);
+//  }
+//  saveArrayToFile(argv[2], outputArray, lenArray);
 
-  return 0;
-}
+//  return 0;
+//}
