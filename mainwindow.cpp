@@ -72,3 +72,35 @@ void MainWindow::on_releaseSlider_sliderMoved(int position)
 {
     env1->setReleaseTime(position/100);
 }
+
+void MainWindow::on_radioButton_toggled(bool checked)
+{
+    if(checked)
+        myFilter->setType(LPF);
+}
+
+void MainWindow::on_radioButton_2_toggled(bool checked)
+{
+    if(checked) {
+        myFilter->setType(BPF);
+        myFilter->setBandwidth(100);
+    }
+}
+
+void MainWindow::on_radioButton_3_toggled(bool checked)
+{
+    if(checked)
+        myFilter->setType(HPF);
+}
+
+void MainWindow::on_radioButton_4_toggled(bool checked)
+{
+    if(checked)
+        myFilter->setOrder(2);
+}
+
+void MainWindow::on_radioButton_5_toggled(bool checked)
+{
+    if(checked)
+        myFilter->setOrder(4);
+}

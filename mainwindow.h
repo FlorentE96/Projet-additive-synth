@@ -33,6 +33,14 @@ private slots:
 
     void on_releaseSlider_sliderMoved(int position);
 
+    void on_radioButton_toggled(bool checked);
+
+    void on_radioButton_2_toggled(bool checked);
+
+    void on_radioButton_3_toggled(bool checked);
+
+    void on_radioButton_4_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     Osc* osc1;
