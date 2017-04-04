@@ -39,5 +39,4 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-DISTFILES += \
-    values
+DISTFILES +=
