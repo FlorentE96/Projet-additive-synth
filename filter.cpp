@@ -2,9 +2,14 @@
 
 // ************ TODO : verify designed filter **********************************
 
-void Filter::setType(filtType newFilterType){
+void Filter::setTypeInit(filtType newFilterType){
   filterType = newFilterType;
 }
+
+void Filter::setType( filtType newFilterType) {
+  filterType = newFilterType;
+  DesignFilter( filterType );
+}  
 void Filter::setFc(uint32_t newFc){
   Fc = newFc;
 }
@@ -44,6 +49,28 @@ float Filter::getCoeff(uint32_t i){
   return coeff[i];
 }
 
+void Filter::DesignFilter( filtType _filterType ){
+	
+	  /*switch(_filterType){
+    case LPF :
+      cout << "LPF" << endl;
+      DesignLPF();
+    case HPF :
+    cout << "HPF" << endl;
+      DesignHPF();
+  }*/
+  
+  if(_filterType == LPF){
+  DesignLPF();
+  }
+  else if(_filterType == HPF){
+    DesignHPF();
+  }
+  else if (_filterType == BPF){
+	DesignBPF();
+  }
+	
+}
 void Filter::DesignLPF(void){
 
   coeff[0] = 0.5f*(1.0f-cos(wc));
@@ -78,7 +105,7 @@ Filter::Filter(){
   setOrder(DEFAULT_ORDER);
   setFc(DEFAULT_FC);
   setQ(DEFAULT_Q);
-  setType(LPF);
+  setTypeInit(LPF);
   setFs();
 
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
@@ -91,28 +118,16 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order ){
   setOrder(_order);
   setFc(_Fc);
   setQ(_Q);
-  setType(_filterType);
+  setTypeInit(_filterType);
   setFs();
   // set intermediate variables
 
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
   alpha = 0.5f*( sin(wc / Q ));
 
-  /*switch(_filterType){
-    case LPF :
-      cout << "LPF" << endl;
-      DesignLPF();
-    case HPF :
-    cout << "HPF" << endl;
-      DesignHPF();
-  }*/
+  DesignFilter( filterType );
 
-  if(filterType == LPF){
-    DesignLPF();
-  }
-  else if(filterType == HPF){
-    DesignHPF();
-  }
+
 }
 
 Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order){
@@ -120,17 +135,14 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint3
   setFc(_Fc);
   setQ(_Q);
   setBandwidth(_bw);
-  setType(_filterType);
+  setTypeInit(_filterType);
   setFs();
 
   // set intermediate variables
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
   alpha =  sin(wc)*sinh(0.5f*log(2.0f)*bw*(wc/sin(wc)));
 
-  switch(_filterType){
-    case BPF :
-      DesignBPF();
-  }
+  DesignFilter( filterType );
 }
 
 Filter::~Filter(){
