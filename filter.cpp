@@ -9,7 +9,7 @@ void Filter::setTypeInit(filtType newFilterType){
 void Filter::setType( filtType newFilterType) {
   filterType = newFilterType;
   DesignFilter( filterType );
-}  
+}
 void Filter::setFc(uint32_t newFc){
   Fc = newFc;
 }
@@ -50,7 +50,7 @@ float Filter::getCoeff(uint32_t i){
 }
 
 void Filter::DesignFilter( filtType _filterType ){
-	
+
 	  /*switch(_filterType){
     case LPF :
       cout << "LPF" << endl;
@@ -59,7 +59,7 @@ void Filter::DesignFilter( filtType _filterType ){
     cout << "HPF" << endl;
       DesignHPF();
   }*/
-  
+
   if(_filterType == LPF){
   DesignLPF();
   }
@@ -69,7 +69,7 @@ void Filter::DesignFilter( filtType _filterType ){
   else if (_filterType == BPF){
 	DesignBPF();
   }
-	
+
 }
 void Filter::DesignLPF(void){
 
@@ -157,7 +157,6 @@ void Filter::filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen)
         oarray[i] = 0;
       }
       else {
-        cout << "oarray[i] = " << oarray[i] << " | oarray[i-1] = " << oarray[i-1] << " | oarray[i-2] = " << oarray[i-2] << endl;
         oarray[i] =(int16_t)( (coeff[0]/coeff[3])*iarray[i] + (coeff[1]/coeff[3])*iarray[i-1] + (coeff[2]/coeff[3])*iarray[i-2] - (coeff[4]/coeff[3])*oarray[i-1] - (coeff[5]/coeff[3])*oarray[i-2] );
       }
 
@@ -178,7 +177,6 @@ int16_t Filter::filterCompute(int16_t idata){
   }
   else{
     result = (int16_t)( (coeff[0]/coeff[3])*idata + (coeff[1]/coeff[3])*inputs[1] + (coeff[2]/coeff[3])*inputs[0] - (coeff[4]/coeff[3])*outputs[1] - (coeff[5]/coeff[3])*outputs[0] );
-    cout << "output = " << result << "| oarray[i-1] = " << outputs[1] << "| oarray[i-2] = " << outputs[0] << endl;
     outputs[0] = outputs[1];
     outputs[1] = result;
     inputs[0] = inputs[1];

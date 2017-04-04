@@ -1,0 +1,2 @@
+g++ test_audio.cpp oscillators.cpp luts.cpp filter.cpp libportaudio.a -std=c++11 -lrt -lm -lasound -pthread -o test_audio
+
