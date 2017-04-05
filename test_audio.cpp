@@ -6,12 +6,12 @@
 #include "LUTs.hpp"
 #include "filter.hpp"
 
-#define NUM_SECONDS   (3)
+#define NUM_SECONDS   (1)
 
 typedef struct
 {
-    uint16_t left;
-    uint16_t right;
+    int16_t left;
+    int16_t right;
 }
 paTestData;
 
@@ -27,30 +27,26 @@ static int patestCallback( const void *inputBuffer, void *outputBuffer,
 {
     /* Cast data passed through stream to our structure. */
     paTestData *data = (paTestData*)userData;
-    uint16_t *out = (uint16_t*)outputBuffer;
+    int16_t *out = (int16_t*)outputBuffer;
 
 
     for( unsigned int i=0; i<framesPerBuffer; i++ )
 
     {
+      /*************** write samples into ouput buffer (left then right) ******************/
 
-    // write samples into ouput buffer (left then right)
     *out++ = data->left;
     *out++ = data->right;
 
-    /*out++;
-    *out = data->left;
-    out++;
-    *out = data->right;*/
+		  /*************** compute new values ******************/
 
+    //acquire new osc value
+		data->left = (int16_t)(sine->process()/10);
 
-		// compute new values
-		data->left = sine->process();
-    //data->left = LP->filterCompute(data->left);
+    //filtering
+    data->left = LP->filterCompute(data->left);
 
-    //sine->setFrequency(i);
     data->right = data->left;
-
 
 
 
@@ -65,10 +61,9 @@ int main(void){
     data.left = 0;
     data.right = 0;
 
-    sine = new Osc();
-    sine->setFrequency(2000);
+    sine = new Osc(wavetable_saw3, 500);
 
-    LP = new Filter(LPF, 220, 1.0f, 2);
+    LP = new Filter(LPF, 500, 1.0f, 2);
 
     PaStream *stream;
     /* Initialize library */
@@ -86,7 +81,45 @@ int main(void){
 
     Pa_StartStream( stream );
 
-    Pa_Sleep(NUM_SECONDS*1000); /*streaming duration*/
+    int j = 0;
+
+    while(j<4){
+
+      if(j==0){
+        LP->setFc(300);
+        LP->setQ(1.0f);
+      }
+      else if (j==1){
+        LP->setFc(500);
+        LP->setQ(3.0f);
+      }
+      else if (j==2){
+        LP->setFc(800);
+        LP->setQ(6.0f);
+      }
+      else{
+        LP->setFc(1000);
+        LP->setQ(10.0f);
+      }
+
+      for(unsigned int i = 0; i < NUM_SECONDS*1000; i++){
+
+        sine->setFrequency(i);
+        Pa_Sleep(1);    //sleeping time in ms
+
+      }
+
+      for(unsigned int i = NUM_SECONDS*1000; i>0; i--){
+
+        sine->setFrequency(i);
+        Pa_Sleep(1);
+
+      }
+      j++;
+    }
+
+
+
 
     Pa_StopStream( stream );
 
