@@ -41,6 +41,8 @@ private slots:
 
     void on_radioButton_4_toggled(bool checked);
 
+    void on_radioButton_5_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     Osc* osc1;

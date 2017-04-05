@@ -104,3 +104,4 @@ void MainWindow::on_radioButton_5_toggled(bool checked)
     if(checked)
         myFilter->setOrder(4);
 }
+
