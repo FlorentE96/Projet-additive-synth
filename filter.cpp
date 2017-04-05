@@ -1,10 +1,27 @@
 #include "filter.hpp"
 
-// ************ TODO : verify designed filter **********************************
 
-void Filter::setTypeInit(filtType newFilterType){
+void Filter::setType_Init(filtType newFilterType){
   filterType = newFilterType;
 }
+
+void Filter::setFc_Init(uint32_t newFc){
+  Fc = newFc;
+}
+void Filter::setBandwidth_Init(uint32_t newBw){
+  bw = newBw;
+}
+void Filter::setQ_Init(float newQ){
+  Q = newQ;
+}
+void Filter::setOrder_Init(uint32_t newOrder){
+  order = newOrder;
+}
+void Filter::setFs_Init(){
+  Fs = SAMPLE_RATE;
+}
+
+
 
 void Filter::setType( filtType newFilterType) {
   filterType = newFilterType;
@@ -12,19 +29,21 @@ void Filter::setType( filtType newFilterType) {
 }
 void Filter::setFc(uint32_t newFc){
   Fc = newFc;
+  DesignFilter( filterType );
 }
 void Filter::setBandwidth(uint32_t newBw){
   bw = newBw;
+  DesignFilter( filterType );
 }
 void Filter::setQ(float newQ){
   Q = newQ;
+  DesignFilter( filterType );
 }
 void Filter::setOrder(uint32_t newOrder){
   order = newOrder;
+  DesignFilter( filterType );
 }
-void Filter::setFs(){
-  Fs = SAMPLE_RATE;
-}
+
 
 
 
@@ -49,22 +68,15 @@ float Filter::getCoeff(uint32_t i){
   return coeff[i];
 }
 
-void Filter::DesignFilter( filtType _filterType ){
 
-	  /*switch(_filterType){
-    case LPF :
-      cout << "LPF" << endl;
-      DesignLPF();
-    case HPF :
-    cout << "HPF" << endl;
-      DesignHPF();
-  }*/
+
+void Filter::DesignFilter( filtType _filterType ){
 
   if(_filterType == LPF){
   DesignLPF();
   }
   else if(_filterType == HPF){
-    DesignHPF();
+  DesignHPF();
   }
   else if (_filterType == BPF){
 	DesignBPF();
@@ -72,6 +84,9 @@ void Filter::DesignFilter( filtType _filterType ){
 
 }
 void Filter::DesignLPF(void){
+
+  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
+  alpha = 0.5f*( sin(wc / Q ));
 
   coeff[0] = 0.5f*(1.0f-cos(wc));
   coeff[1] = 1.0f-cos(wc);
@@ -83,6 +98,9 @@ void Filter::DesignLPF(void){
 
 void Filter::DesignHPF(void){
 
+  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
+  alpha = 0.5f*( sin(wc / Q ));
+
   coeff[0] = 0.5f*(1.0f+cos(wc));
   coeff[1] = -1.0f-cos(wc);
   coeff[2] = coeff[0];
@@ -93,6 +111,9 @@ void Filter::DesignHPF(void){
 
 void Filter::DesignBPF(void){
 
+  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
+  alpha =  sin(wc)*sinh(0.5f*log(2.0f)*bw*(wc/sin(wc)));
+
   coeff[0] = Q*alpha;
   coeff[1] = 0.0f;
   coeff[2] = -coeff[0];
@@ -102,28 +123,21 @@ void Filter::DesignBPF(void){
 }
 
 Filter::Filter(){
-  setOrder(DEFAULT_ORDER);
-  setFc(DEFAULT_FC);
-  setQ(DEFAULT_Q);
-  setTypeInit(LPF);
-  setFs();
-
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha = 0.5f*( sin(wc / Q ));
+  setOrder_Init(DEFAULT_ORDER);
+  setFc_Init(DEFAULT_FC);
+  setQ_Init(DEFAULT_Q);
+  setType_Init(LPF);
+  setFs_Init();
 
   DesignLPF();
 
 }
 Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order ){
-  setOrder(_order);
-  setFc(_Fc);
-  setQ(_Q);
-  setTypeInit(_filterType);
-  setFs();
-  // set intermediate variables
-
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha = 0.5f*( sin(wc / Q ));
+  setOrder_Init(_order);
+  setFc_Init(_Fc);
+  setQ_Init(_Q);
+  setType_Init(_filterType);
+  setFs_Init();
 
   DesignFilter( filterType );
 
@@ -131,16 +145,12 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order ){
 }
 
 Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order){
-  setOrder(_order);
-  setFc(_Fc);
-  setQ(_Q);
-  setBandwidth(_bw);
-  setTypeInit(_filterType);
-  setFs();
-
-  // set intermediate variables
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha =  sin(wc)*sinh(0.5f*log(2.0f)*bw*(wc/sin(wc)));
+  setOrder_Init(_order);
+  setFc_Init(_Fc);
+  setQ_Init(_Q);
+  setBandwidth_Init(_bw);
+  setType_Init(_filterType);
+  setFs_Init();
 
   DesignFilter( filterType );
 }
@@ -148,8 +158,6 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint3
 Filter::~Filter(){
 
 }
-
-
 
 void Filter::filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen){
   for(uint32_t i = 0; i < iLen; i++){

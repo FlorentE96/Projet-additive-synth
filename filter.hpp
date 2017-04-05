@@ -28,14 +28,19 @@ private:
   float Q; //quality factor
   float alpha;
   float wc; //normalized cut-off frequency
-	
-  void DesignFilter( filtType _filterType);	
+
+  void DesignFilter( filtType _filterType);
   // filling filter coefficients array regarding filter type and parameters given
   void DesignLPF(void);
   void DesignHPF(void);
   void DesignBPF(void);
-  void setFs();
-  void setTypeInit(filtType newFilterType);
+  void setFs_Init();
+
+  void setType_Init(filtType newFilterType);
+  void setFc_Init(uint32_t newFc);
+  void setBandwidth_Init(uint32_t newBw);
+  void setQ_Init(float newQ);
+  void setOrder_Init(uint32_t newOrder);
 
 
 public:
@@ -51,7 +56,7 @@ public:
   ~Filter();
 
   //setter
-  
+
   void setType(filtType newFilterType);
   void setFc(uint32_t newFc);
   void setBandwidth(uint32_t newBw);
