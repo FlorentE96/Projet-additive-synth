@@ -41,7 +41,7 @@ void Filter::setQ(float newQ){
 }
 void Filter::setOrder(uint32_t newOrder){
   order = newOrder;
-  DesignFilter( filterType );
+  //DesignFilter( filterType );
 }
 
 
@@ -174,21 +174,41 @@ void Filter::filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen)
 
 int16_t Filter::filterCompute(int16_t idata){
   int16_t result = 0;
-  static int16_t inputs[2];
-  static int16_t outputs[2];
+  /***** filterX_samples structure *****/
+  /***** | input[0] | input[1] | output[0] | output[1] | ****/
+  /***** there are sample redundance between the stages  => optimization to be done ****/
+  static int16_t filter1_samples[4];
+  static int16_t filter2_samples[4];
   static int i = 0;
+  int16_t input = idata;
+
+
 
   if (i < 2 ){
-    outputs[i] = 0;
-    inputs[i] = idata;
+    filter1_samples[i] = 0;
+    filter1_samples[i+2] = input;
+    filter2_samples[i] = 0;
+    filter2_samples[i+2] = 0;
+    result = 0;
     i++;
   }
   else{
-    result = (int16_t)( (coeff[0]/coeff[3])*idata + (coeff[1]/coeff[3])*inputs[1] + (coeff[2]/coeff[3])*inputs[0] - (coeff[4]/coeff[3])*outputs[1] - (coeff[5]/coeff[3])*outputs[0] );
-    outputs[0] = outputs[1];
-    outputs[1] = result;
-    inputs[0] = inputs[1];
-    inputs[1] = idata;
+
+        result = (int16_t)( (coeff[0]/coeff[3])*input + (coeff[1]/coeff[3])*filter1_samples[3] + (coeff[2]/coeff[3])*filter1_samples[2] - (coeff[4]/coeff[3])*filter1_samples[1] - (coeff[5]/coeff[3])*filter1_samples[0] );
+        filter1_samples[0] = filter1_samples[1];
+        filter1_samples[1] = result;
+        filter1_samples[2] = filter1_samples[3];
+        filter1_samples[3] = input;
+
+
+        if(getOrder() == 4 ){
+            input = result; // output is now input for the next 2nd order filter
+            result = (int16_t)( (coeff[0]/coeff[3])*input + (coeff[1]/coeff[3])*filter2_samples[3] + (coeff[2]/coeff[3])*filter2_samples[2] - (coeff[4]/coeff[3])*filter2_samples[1] - (coeff[5]/coeff[3])*filter2_samples[0] );
+            filter2_samples[0] = filter2_samples[1];
+            filter2_samples[1] = result;
+            filter2_samples[2] = filter2_samples[3];
+            filter2_samples[3] = input;
+        }
   }
   return result;
 }
