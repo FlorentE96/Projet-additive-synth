@@ -46,10 +46,11 @@ DISTFILES +=
 
 
 
-win32: LIBS += -LC:/MinGW/lib/ -lportaudio
 
-INCLUDEPATH += C:/MinGW/include
-DEPENDPATH += C:/MinGW/include
+#win32: LIBS += -LC:/MinGW/lib/ -lportaudio
 
-win32:!win32-g++: PRE_TARGETDEPS += C:/MinGW/lib/portaudio.lib
-else:win32-g++: PRE_TARGETDEPS += C:/MinGW/lib/libportaudio.a
+#INCLUDEPATH += C:/MinGW/include
+#DEPENDPATH += C:/MinGW/include
+
+#win32:!win32-g++: PRE_TARGETDEPS += C:/MinGW/lib/portaudio.lib
+#else:win32-g++: PRE_TARGETDEPS += C:/MinGW/lib/libportaudio.a
