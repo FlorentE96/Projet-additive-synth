@@ -35,9 +35,21 @@ HEADERS  += mainwindow.h \
     filter.hpp \
     global.hpp \
     LUTs.hpp \
-    oscillators.hpp \
-    portaudio.h
+    oscillators.hpp
 
 FORMS    += mainwindow.ui
 
 DISTFILES +=
+
+
+
+
+
+
+win32: LIBS += -LC:/MinGW/lib/ -lportaudio
+
+INCLUDEPATH += C:/MinGW/include
+DEPENDPATH += C:/MinGW/include
+
+win32:!win32-g++: PRE_TARGETDEPS += C:/MinGW/lib/portaudio.lib
+else:win32-g++: PRE_TARGETDEPS += C:/MinGW/lib/libportaudio.a
