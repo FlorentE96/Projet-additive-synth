@@ -35,7 +35,8 @@ HEADERS  += mainwindow.h \
     filter.hpp \
     global.hpp \
     LUTs.hpp \
-    oscillators.hpp
+    oscillators.hpp \
+    portaudio.h
 
 FORMS    += mainwindow.ui
 

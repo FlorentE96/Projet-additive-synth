@@ -1,10 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <cstdint>
-#include "global.hpp"
-#include "oscillators.hpp"
-#include "ADSR.hpp"
-#include "LUTs.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

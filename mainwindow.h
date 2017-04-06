@@ -2,9 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <cstdint>
+#include <cmath>
+#include <iostream>
+#include <fstream>
+#include "portaudio.h"
+#include "global.hpp"
 #include "oscillators.hpp"
-#include "ADSR.hpp"
+#include "LUTs.hpp"
 #include "filter.hpp"
+#include "ADSR.hpp"
 
 namespace Ui {
 class MainWindow;
