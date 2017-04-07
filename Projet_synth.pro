@@ -15,7 +15,8 @@ TEMPLATE = app
 # any feature of Qt which as been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += QT_DEPRECATED_WARNINGS \
+            __WINDOWS_MM__
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -25,32 +26,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    RtMidi.cpp \
     ADSR.cpp \
     filter.cpp \
     oscillators.cpp \
-    LUTs.cpp
+    LUTs.cpp \
+    modmatrix.cpp
 
 HEADERS  += mainwindow.h \
+    RtMidi.h \
     ADSR.hpp \
     filter.hpp \
     global.hpp \
     LUTs.hpp \
-    oscillators.hpp
+    oscillators.hpp \
+    modmatrix.hpp
 
 FORMS    += mainwindow.ui
 
+LIBS += -lwinmm
+
 DISTFILES +=
-
-
-
-
-
-
-
-#win32: LIBS += -LC:/MinGW/lib/ -lportaudio
-
-#INCLUDEPATH += C:/MinGW/include
-#DEPENDPATH += C:/MinGW/include
-
-#win32:!win32-g++: PRE_TARGETDEPS += C:/MinGW/lib/portaudio.lib
-#else:win32-g++: PRE_TARGETDEPS += C:/MinGW/lib/libportaudio.a

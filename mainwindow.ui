@@ -25,8 +25,8 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>170</red>
-        <green>85</green>
+        <red>0</red>
+        <green>255</green>
         <blue>0</blue>
        </color>
       </brush>
@@ -70,9 +70,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
-        <blue>127</blue>
+        <red>35</red>
+        <green>197</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -126,8 +126,8 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>170</red>
-        <green>85</green>
+        <red>0</red>
+        <green>255</green>
         <blue>0</blue>
        </color>
       </brush>
@@ -171,9 +171,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
-        <blue>127</blue>
+        <red>35</red>
+        <green>197</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -227,8 +227,8 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>170</red>
-        <green>85</green>
+        <red>0</red>
+        <green>255</green>
         <blue>0</blue>
        </color>
       </brush>
@@ -263,18 +263,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
-        <blue>127</blue>
+        <red>35</red>
+        <green>197</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
-        <green>0</green>
-        <blue>127</blue>
+        <red>35</red>
+        <green>197</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -715,6 +715,19 @@
     <attribute name="buttonGroup">
      <string notr="true">filterType</string>
     </attribute>
+   </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>330</y>
+      <width>118</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

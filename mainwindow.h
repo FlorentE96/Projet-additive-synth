@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
+#include <QMessageBox>
 #include <cstdint>
 #include <cmath>
 #include <iostream>
@@ -49,6 +51,10 @@ private slots:
     void on_radioButton_4_toggled(bool checked);
 
     void on_radioButton_5_toggled(bool checked);
+
+    void keyPressEvent(QKeyEvent* e);
+
+    void keyReleaseEvent(QKeyEvent* e);
 
 private:
     Ui::MainWindow *ui;

@@ -100,3 +100,14 @@ void MainWindow::on_radioButton_5_toggled(bool checked)
         myFilter->setOrder(4);
 }
 
+void MainWindow::keyPressEvent(QKeyEvent* e)
+{
+    env1->gate(ON);
+    //e->text();
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent* e)
+{
+    env1->gate(OFF);
+    //e->text();
+}
