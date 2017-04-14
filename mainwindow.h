@@ -56,6 +56,8 @@ private slots:
 
     void keyReleaseEvent(QKeyEvent* e);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Osc* osc1;

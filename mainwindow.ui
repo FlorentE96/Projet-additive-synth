@@ -729,6 +729,19 @@
      <number>24</number>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>210</y>
+      <width>80</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -766,7 +779,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="filterType"/>
   <buttongroup name="filterOrder"/>
+  <buttongroup name="filterType"/>
  </buttongroups>
 </ui>

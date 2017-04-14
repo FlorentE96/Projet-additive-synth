@@ -30,8 +30,7 @@ SOURCES += main.cpp\
     ADSR.cpp \
     filter.cpp \
     oscillators.cpp \
-    LUTs.cpp \
-    modmatrix.cpp
+    LUTs.cpp
 
 HEADERS  += mainwindow.h \
     RtMidi.h \
@@ -39,11 +38,12 @@ HEADERS  += mainwindow.h \
     filter.hpp \
     global.hpp \
     LUTs.hpp \
-    oscillators.hpp \
-    modmatrix.hpp
+    oscillators.hpp
 
 FORMS    += mainwindow.ui
 
-LIBS += -lwinmm
+LIBS += -lwinmm \
+    -lportaudio.dll
+#-L/path/to/libraries libportaudio.a -lrt -lasound -lpthread -lm
 
 DISTFILES +=

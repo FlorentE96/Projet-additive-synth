@@ -111,3 +111,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e)
     env1->gate(OFF);
     //e->text();
 }
+
+void MainWindow::on_pushButton_clicked()
+{
+
+}
