@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     osc1 = new Osc(wavetable_saw3, DEFAULT_FREQ);
     myFilter = new Filter(LPF, 1764, 1.0f, 2);
     env1 = new ADSR;
+
     ui->oscPitchDial->setMaximum(3000);
     ui->oscPitchDial->setMinimum(50);
 
@@ -28,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete osc1;
+    delete env1;
+    delete myFilter;
 }
 
 void MainWindow::on_oscPitchDial_sliderMoved(int position)
@@ -115,4 +119,81 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e)
 void MainWindow::on_pushButton_clicked()
 {
 
+}
+
+
+
+static int patestCallback( const void *inputBuffer, void *outputBuffer,
+                           unsigned long framesPerBuffer,
+                           const PaStreamCallbackTimeInfo* timeInfo,
+                           PaStreamCallbackFlags statusFlags,
+                           void *userData )
+{
+    /* Cast data passed through stream to our structure. */
+    paTestData *data = (paTestData*)userData;
+    int16_t *out = (int16_t*)outputBuffer;
+
+
+    for( unsigned int i=0; i<framesPerBuffer; i++ )
+
+    {
+      /*************** write samples into ouput buffer (left then right) ******************/
+
+    *out++ = data->left;
+    *out++ = data->right;
+
+          /*************** compute new values ******************/
+
+    //acquire new osc value
+        data->left = (int16_t)(sine->process()/10);
+
+    //filtering
+    data->left = LP->filterCompute(data->left);
+
+    data->right = data->left;
+
+
+
+    }
+    return 0;
+}
+
+
+static int patestCallback( const void *inputBuffer, void *outputBuffer,
+                           unsigned long framesPerBuffer,
+                           const PaStreamCallbackTimeInfo* timeInfo,
+                           PaStreamCallbackFlags statusFlags,
+                           void *userData )
+{
+    /* Cast data passed through stream to our structure. */
+    paTestData *data = (paTestData*)userData;
+    int16_t *out = (int16_t*)outputBuffer;
+
+    (void)inputBuffer;
+    (void)timeInfo;
+    (void)statusFlags;
+
+
+    for( unsigned int i=0; i<framesPerBuffer; i++ )
+
+    {
+      /*************** write samples into ouput buffer (left then right) ******************/
+
+    *out++ = data->left;
+    *out++ = data->right;
+
+          /*************** compute new values ******************/
+
+    //acquire new osc value
+    data->left = (int16_t)(sine->process()/10);
+
+    //filtering
+    data->left = LP->filterCompute(data->left);
+
+    data->right = data->left;
+
+
+
+    }
+    return 0;
 }

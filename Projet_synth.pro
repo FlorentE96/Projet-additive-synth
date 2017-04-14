@@ -33,6 +33,7 @@ SOURCES += main.cpp\
     LUTs.cpp
 
 HEADERS  += mainwindow.h \
+    portaudio.h \
     RtMidi.h \
     ADSR.hpp \
     filter.hpp \
@@ -43,7 +44,8 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 LIBS += -lwinmm \
-    -lportaudio.dll
-#-L/path/to/libraries libportaudio.a -lrt -lasound -lpthread -lm
+ -L$$PWD/./portaudio/lib/.libs/ -lportaudio
 
 DISTFILES +=
+
+
