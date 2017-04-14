@@ -60,9 +60,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Osc* osc1;
-    Filter* myFilter;
-    ADSR* env1;
 };
 
 #endif // MAINWINDOW_H

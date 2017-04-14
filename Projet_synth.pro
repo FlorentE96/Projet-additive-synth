@@ -30,20 +30,24 @@ SOURCES += main.cpp\
     ADSR.cpp \
     filter.cpp \
     oscillators.cpp \
-    LUTs.cpp
+    LUTs.cpp \
+    synth_engine.cpp
 
 HEADERS  += mainwindow.h \
+    portaudio.h \
     RtMidi.h \
     ADSR.hpp \
     filter.hpp \
     global.hpp \
     LUTs.hpp \
-    oscillators.hpp
+    oscillators.hpp \
+    synth_engine.hpp
 
 FORMS    += mainwindow.ui
 
 LIBS += -lwinmm \
-    -lportaudio.dll
-#-L/path/to/libraries libportaudio.a -lrt -lasound -lpthread -lm
+ -L$$PWD/./portaudio/lib/.libs/ -lportaudio
 
 DISTFILES +=
+
+

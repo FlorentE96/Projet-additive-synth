@@ -1,14 +1,37 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+using namespace std;
+
+static paTestData myData;
+
+static int patestCallback( const void *inputBuffer, void *outputBuffer,
+                           unsigned long framesPerBuffer,
+                           const PaStreamCallbackTimeInfo* timeInfo,
+                           PaStreamCallbackFlags statusFlags,
+                           void *userData );
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    osc1 = new Osc(wavetable_saw3, DEFAULT_FREQ);
-    myFilter = new Filter(LPF, 1764, 1.0f, 2);
-    env1 = new ADSR;
+
+    /* Initialize library */
+    Pa_Initialize();
+
+    /* Open an output-only audio stream. */
+    Pa_OpenDefaultStream( &stream,
+                                0,          /* no input channels */
+                                2,          /* stereo output */
+                                paInt16,  /* 16 bit int output */
+                                SAMPLE_RATE,
+                                256,        /* frames per buffer */
+                                patestCallback, /*routine to execute when audio is needed */
+                                &myData ); /*static structure representing left and right channel samples */
+
+    Pa_StartStream( stream );
+
     ui->oscPitchDial->setMaximum(3000);
     ui->oscPitchDial->setMinimum(50);
 
@@ -115,4 +138,41 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e)
 void MainWindow::on_pushButton_clicked()
 {
 
+}
+
+
+static int patestCallback( const void *inputBuffer, void *outputBuffer,
+                           unsigned long framesPerBuffer,
+                           const PaStreamCallbackTimeInfo* timeInfo,
+                           PaStreamCallbackFlags statusFlags,
+                           void *userData )
+{
+    /* Cast data passed through stream to our structure. */
+    paTestData *data = (paTestData*)userData;
+    int16_t *out = (int16_t*)outputBuffer;
+
+    (void)inputBuffer;
+    (void)timeInfo;
+    (void)statusFlags;
+
+
+    for( unsigned int i=0; i<framesPerBuffer; i++ )
+
+    {
+      /*************** write samples into ouput buffer (left then right) ******************/
+
+    *out++ = data->left;
+    *out++ = data->right;
+
+          /*************** compute new values ******************/
+
+    //acquire new osc value
+    data->left = 0;
+
+    data->right = data->left;
+
+
+
+    }
+    return 0;
 }
