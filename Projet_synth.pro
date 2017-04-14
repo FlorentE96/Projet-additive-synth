@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     ADSR.cpp \
     filter.cpp \
     oscillators.cpp \
-    LUTs.cpp
+    LUTs.cpp \
+    synth_engine.cpp
 
 HEADERS  += mainwindow.h \
     portaudio.h \
@@ -39,7 +40,8 @@ HEADERS  += mainwindow.h \
     filter.hpp \
     global.hpp \
     LUTs.hpp \
-    oscillators.hpp
+    oscillators.hpp \
+    synth_engine.hpp
 
 FORMS    += mainwindow.ui
 
