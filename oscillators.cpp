@@ -43,6 +43,10 @@ uint32_t Osc::getFrequency() {
     return frequency;
 }
 
+void Osc::setWF(int16_t * _wavetable) {
+    wavetable = _wavetable;
+}
+
 int16_t Osc::linearInterpolation() {
   float temp = phase * PHASE_FACTOR; // Scales the phase to LUT resolution
   int16_t intPart = temp; // int part of the scaled phasor

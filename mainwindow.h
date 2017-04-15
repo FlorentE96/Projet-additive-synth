@@ -52,7 +52,9 @@ private slots:
 
     void keyReleaseEvent(QKeyEvent* e);
 
-    void on_pushButton_clicked();
+    void on_selectSine_toggled(bool checked);
+
+    void on_selectSaw3_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;

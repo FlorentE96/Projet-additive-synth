@@ -4,7 +4,7 @@
 
 synthEngine::synthEngine()
 {
-    osc1 = new Osc(wavetable_saw3, DEFAULT_FREQ);
+    osc1 = new Osc(wavetable_sine, DEFAULT_FREQ);
     filt1 = new Filter(LPF, 1764, 1.0f, 2);
     env1 = new ADSR;
 
