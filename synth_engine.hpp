@@ -24,7 +24,17 @@ public:
     Osc * osc1;
     Filter * filt1;
     ADSR * env1;
-    void mycallback( double deltatime, std::vector< unsigned char > *message, void *userData );
+    void mycallback( double deltatime, std::vector< unsigned char > *message);
+
+    static void s_mycallback( double deltatime, std::vector< unsigned char > *message, void *userData )
+    {
+//      return ((synthEngine*)userData)
+//         ->mycallback(deltatime, message);
+
+        ((synthEngine*)userData)->mycallback(deltatime, message);
+    }
+
+
     int myMemberCallback(const void *input, void *output,
       unsigned long frameCount,
       const PaStreamCallbackTimeInfo* timeInfo,

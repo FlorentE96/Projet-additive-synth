@@ -12,9 +12,11 @@ synthEngine::synthEngine()
     if ( midiIn->getPortCount() == 0 ) {
         std::cout << "No ports available!\n" << endl;
     }
-    midiIn->openPort( 0 );
-    midiIn->setCallback( &mycallback , NULL);
-    midiIn->ignoreTypes( false, false, false );
+    else{
+        midiIn->openPort( 0 );
+        midiIn->setCallback( &synthEngine::s_mycallback, (void *)this);
+        midiIn->ignoreTypes( false, false, false );
+    }
 
     Pa_Initialize();
     /* Open an output-only audio stream. */
@@ -77,11 +79,44 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
     return paContinue;
 }
 
-void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *message, void *userData )
+void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *message )
 {
-  unsigned int nBytes = message->size();
-  for ( unsigned int i=0; i<nBytes; i++ )
-    std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
-  if ( nBytes > 0 )
-    std::cout << "stamp = " << deltatime << std::endl;
+//  unsigned int nBytes = message->size();
+//  for ( unsigned int i=0; i<nBytes; i++ )
+//    std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
+//  if ( nBytes > 0 )
+//    std::cout << "stamp = " << deltatime << std::endl;
+
+  uint32_t id_key = (uint32_t)message->at(0);
+  uint32_t id_note = (uint32_t)message->at(1);
+  uint32_t value = (uint32_t)message->at(2);
+
+  if(id_key == 144){ //Press Key
+        uint32_t frequency;
+        if (id_note < 69){
+            frequency = (uint32_t)(1/pow(2, ((double)(69-id_note))/((double)12) )*440.0f);
+        }
+        else{
+            frequency = (uint32_t)(pow(2, ((double)(id_note-69))/((double)12) )*440.0f);
+        }
+        cout << "ID : " << id_note <<" | Freq : "<< frequency << endl;
+        osc1->setFrequency(frequency);
+        env1->gate(ON);
+  }
+  else if(id_key == 128){ //Release Key
+        env1->gate(OFF);
+  }
+
+  else if(id_key == 176){ //Potentiometer or other button
+      if(id_note == 8 ){
+          uint32_t f = (uint32_t)(((float)3000/128)*value);
+          if (f<1) f=1;
+          filt1->setFc(f);
+      }
+      else if (id_note == 9){
+          float q = ((float)10/128)*value;
+          if (q < 1.0f) q=1.0f;
+          filt1->setQ(q );
+      }
+  }
 }
