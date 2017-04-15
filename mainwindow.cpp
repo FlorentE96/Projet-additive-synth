@@ -10,17 +10,20 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->oscPitchDial->setMaximum(3000);
+    ui->oscPitchDial->setMaximum(1000);
     ui->oscPitchDial->setMinimum(50);
     ui->oscPitchDial->setValue(440);
+    ui->lcdnumber->display(440);
 
-    ui->filterCutoffDial->setMaximum(3000);
+    ui->filterCutoffDial->setMaximum(1000);
     ui->filterCutoffDial->setMinimum(50);
-    ui->filterCutoffDial->setValue(3000);
+    ui->filterCutoffDial->setValue(1000);
+    ui->lcdCutoff->display(3000);
 
     ui->filterQDial->setMaximum(1000);
     ui->filterQDial->setMinimum(101);
     ui->filterQDial->setValue(102);
+    ui->lcdRes->display(1.02);
 
     ui->attackSlider->setMaximum(150);
     ui->decaySlider->setMaximum(150);
