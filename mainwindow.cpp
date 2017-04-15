@@ -39,40 +39,41 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_oscPitchDial_sliderMoved(int position)
 {
-    synth->osc1->setFrequency(position);
+    synth->osc1->setFrequency((uint32_t)position);
     ui->lcdnumber->display(position);
 }
 
 void MainWindow::on_filterCutoffDial_sliderMoved(int position)
 {
-    synth->filt1->setFc(position);
+    synth->filt1->setFc((uint32_t)position);
     ui->lcdCutoff->display(position);
 }
 
 void MainWindow::on_filterQDial_sliderMoved(int position)
 {
-    synth->filt1->setQ(position/100);
-    ui->lcdRes->display(position/100);
+    synth->filt1->setQ((float)position/100);
+    ui->lcdRes->display((float)position/100);
 }
 
 void MainWindow::on_attackSlider_sliderMoved(int position)
 {
-    synth->env1->setAttackTime(position/100);
+    synth->env1->setAttackTime((float)position/100);
 }
 
 void MainWindow::on_decaySlider_sliderMoved(int position)
 {
-    synth->env1->setDecayTime(position/100);
+    synth->env1->setDecayTime((float)position/100);
 }
 
 void MainWindow::on_sustainSlider_sliderMoved(int position)
 {
-    synth->env1->setSustainLevel(position/100);
+    synth->env1->setSustainLevel((float)position/100);
+    std::cout << synth->env1->getSustainLevel() << std::endl;
 }
 
 void MainWindow::on_releaseSlider_sliderMoved(int position)
 {
-    synth->env1->setReleaseTime(position/100);
+    synth->env1->setReleaseTime(float)(position/100);
 }
 
 void MainWindow::on_radioButton_toggled(bool checked)
@@ -109,13 +110,15 @@ void MainWindow::on_radioButton_5_toggled(bool checked)
 
 void MainWindow::keyPressEvent(QKeyEvent* e)
 {
-    synth->env1->gate(ON);
+    if(!(e->isAutoRepeat()))
+        synth->env1->gate(ON);
     //e->text();
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent* e)
 {
-    synth->env1->gate(OFF);
+    if(!(e->isAutoRepeat()))
+        synth->env1->gate(OFF);
     //e->text();
 }
 
