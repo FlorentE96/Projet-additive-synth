@@ -73,7 +73,7 @@ void MainWindow::on_sustainSlider_sliderMoved(int position)
 
 void MainWindow::on_releaseSlider_sliderMoved(int position)
 {
-    synth->env1->setReleaseTime(float)(position/100);
+    synth->env1->setReleaseTime((float)position/100);
 }
 
 void MainWindow::on_radioButton_toggled(bool checked)

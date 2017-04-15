@@ -57,7 +57,7 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
               /*************** compute new values ******************/
 
         //acquire new osc value
-        myData.left = osc1->process()*env1->process();
+        myData.left = (short)((osc1->process()*env1->process())/10);
         myData.left = filt1->filterCompute(myData.left);
         myData.right = myData.left;
 
