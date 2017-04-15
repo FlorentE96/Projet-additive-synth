@@ -121,8 +121,15 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e)
     //e->text();
 }
 
-void MainWindow::on_pushButton_clicked()
-{
 
+void MainWindow::on_selectSine_toggled(bool checked)
+{
+    if(checked)
+        synth->osc1->setWF(wavetable_sine);
 }
 
+void MainWindow::on_selectSaw3_toggled(bool checked)
+{
+    if(checked)
+        synth->osc1->setWF(wavetable_saw3);
+}
