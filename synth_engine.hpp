@@ -8,6 +8,7 @@
 #include "oscillators.hpp"
 #include "filter.hpp"
 #include "ADSR.hpp"
+#include "RtMidi.h"
 
 class synthEngine
 {
@@ -23,6 +24,7 @@ public:
     Osc * osc1;
     Filter * filt1;
     ADSR * env1;
+    void mycallback( double deltatime, std::vector< unsigned char > *message, void *userData );
     int myMemberCallback(const void *input, void *output,
       unsigned long frameCount,
       const PaStreamCallbackTimeInfo* timeInfo,
@@ -38,9 +40,12 @@ public:
       return ((synthEngine*)userData)
          ->myMemberCallback(input, output, frameCount, timeInfo, statusFlags);
     }
+	
+
 
 private:
     PaStream * stream;
+    RtMidiIn * midiIn;
     paTestData myData;
 };
 

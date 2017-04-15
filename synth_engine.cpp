@@ -8,8 +8,15 @@ synthEngine::synthEngine()
     filt1 = new Filter(LPF, 1764, 1.0f, 2);
     env1 = new ADSR;
 
-    Pa_Initialize();
+    midiIn = new RtMidiIn();
+    if ( midiIn->getPortCount() == 0 ) {
+        std::cout << "No ports available!\n" << endl;
+    }
+    midiIn->openPort( 0 );
+    midiIn->setCallback( &mycallback , NULL);
+    midiIn->ignoreTypes( false, false, false );
 
+    Pa_Initialize();
     /* Open an output-only audio stream. */
     Pa_OpenDefaultStream( &stream,
                                 0,          /* no input channels */
@@ -21,6 +28,7 @@ synthEngine::synthEngine()
                                 this ); /*static structure representing left and right channel samples */
 
     Pa_StartStream( stream );
+
 }
 
 synthEngine::~synthEngine()
@@ -28,6 +36,8 @@ synthEngine::~synthEngine()
     delete osc1;
     delete env1;
     delete filt1;
+    delete midiIn;
+
 
     Pa_StopStream( stream );
     Pa_CloseStream( stream );
@@ -65,4 +75,13 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
 
     }
     return paContinue;
+}
+
+void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *message, void *userData )
+{
+  unsigned int nBytes = message->size();
+  for ( unsigned int i=0; i<nBytes; i++ )
+    std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
+  if ( nBytes > 0 )
+    std::cout << "stamp = " << deltatime << std::endl;
 }
