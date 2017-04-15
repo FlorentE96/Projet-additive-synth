@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->attackSlider->setMaximum(150);
     ui->decaySlider->setMaximum(150);
     ui->releaseSlider->setMaximum(150);
-    ui->sustainSlider->setMaximum(100);
+    ui->sustainSlider->setMaximum(1000);
 
     synth = new synthEngine();
     synth->env1->gate(OFF);
@@ -67,13 +67,12 @@ void MainWindow::on_decaySlider_sliderMoved(int position)
 
 void MainWindow::on_sustainSlider_sliderMoved(int position)
 {
-    synth->env1->setSustainLevel((float)position/100);
-    std::cout << synth->env1->getSustainLevel() << std::endl;
+    synth->env1->setSustainLevel((float)position/1000);
 }
 
 void MainWindow::on_releaseSlider_sliderMoved(int position)
 {
-    synth->env1->setReleaseTime(float)(position/100);
+    synth->env1->setReleaseTime((float)position/100);
 }
 
 void MainWindow::on_radioButton_toggled(bool checked)
