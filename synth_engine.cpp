@@ -58,7 +58,7 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
 
         //acquire new osc value
         myData.left = osc1->process()*env1->process();
-        std::cout << osc1->getFrequency() << std::endl;
+        myData.left = filt1->filterCompute(myData.left);
         myData.right = myData.left;
 
 
