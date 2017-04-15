@@ -39,6 +39,10 @@ void Osc::setFrequency(uint32_t _frequency) {
     frequency = _frequency;
 }
 
+uint32_t Osc::getFrequency() {
+    return frequency;
+}
+
 int16_t Osc::linearInterpolation() {
   float temp = phase * PHASE_FACTOR; // Scales the phase to LUT resolution
   int16_t intPart = temp; // int part of the scaled phasor

@@ -4,8 +4,6 @@
 
 #define NUM_SECONDS   (1)
 
-MainWindow w;
-
 int main(int argc, char *argv[])
 {
 //    RtMidiIn *midiin = 0;

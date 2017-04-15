@@ -1,6 +1,8 @@
 #include "synth_engine.hpp"
 
-synth_engine::synth_engine()
+
+
+synthEngine::synthEngine()
 {
     osc1 = new Osc(wavetable_saw3, DEFAULT_FREQ);
     filt1 = new Filter(LPF, 1764, 1.0f, 2);
@@ -15,19 +17,52 @@ synth_engine::synth_engine()
                                 paInt16,  /* 16 bit int output */
                                 SAMPLE_RATE,
                                 256,        /* frames per buffer */
-                                patestCallback, /*routine to execute when audio is needed */
-                                &myData ); /*static structure representing left and right channel samples */
+                                &synthEngine::myPaCallback, /*routine to execute when audio is needed */
+                                this ); /*static structure representing left and right channel samples */
 
     Pa_StartStream( stream );
 }
 
-synth_engine::~synth_engine()
+synthEngine::~synthEngine()
 {
     delete osc1;
     delete env1;
-    delete myFilter;
+    delete filt1;
 
     Pa_StopStream( stream );
     Pa_CloseStream( stream );
     Pa_Terminate();
+
+}
+
+int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
+                           unsigned long framesPerBuffer,
+                           const PaStreamCallbackTimeInfo* timeInfo,
+                           PaStreamCallbackFlags statusFlags
+                                   )
+{
+    /* Cast data passed through stream to our structure. */
+    short* myOut;
+
+    myOut = (short*)outputBuffer;
+
+    for( unsigned int i=0; i<framesPerBuffer; i++ )
+
+    {
+          /*************** write samples into ouput buffer (left then right) ******************/
+
+        *myOut++ = myData.left ;
+        *myOut++ = myData.right;
+
+              /*************** compute new values ******************/
+
+        //acquire new osc value
+        myData.left = osc1->process();
+        std::cout << osc1->getFrequency() << std::endl;
+        myData.right = myData.left;
+
+
+
+    }
+    return paContinue;
 }

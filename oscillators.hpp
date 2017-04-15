@@ -31,6 +31,7 @@ public:
   Osc(int16_t * _wavetable, uint32_t _frequency);
   ~Osc();
   void setFrequency(uint32_t _frequency);
+  uint32_t getFrequency();
   int16_t process();
   void reset();
 private:

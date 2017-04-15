@@ -9,11 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include "portaudio.h"
-#include "global.hpp"
-#include "oscillators.hpp"
-#include "LUTs.hpp"
-#include "filter.hpp"
-#include "ADSR.hpp"
+#include "synth_engine.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -60,6 +56,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    synthEngine * synth;
 };
 
 #endif // MAINWINDOW_H
