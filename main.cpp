@@ -1,22 +1,13 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include "RtMidi.h"
+
 
 #define NUM_SECONDS   (1)
 
-int main(int argc, char *argv[])
+
+int main(int argc, char* argv[])
 {
-//    RtMidiIn *midiin = 0;
-//    // RtMidiIn constructor
-//    try {
-//      midiin = new RtMidiIn();
-//    }
-//    catch (RtMidiError &error) {
-//      // Handle the exception here
-//      error.printMessage();
-//    }
-//    // Clean up
-//    delete midiin;
+
 
     QApplication a(argc, argv);
 
@@ -26,5 +17,6 @@ int main(int argc, char *argv[])
 
 
     return a.exec();
+
 
 }

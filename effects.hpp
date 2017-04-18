@@ -1,16 +1,11 @@
-#include <cstdint>
-#include <cmath>
-#include <iostream>
-#include <fstream>
-#include <ctime>
-#include "global.hpp"
 #define MAX_DELAY (220500) // 5sec
+#include <cstdint>
 
 using namespace std;
 class Echo{
 private:
     uint32_t status;
-    float Td; //in s
+    float Td; //delay in s
     uint32_t D;
     float Fb;
     float DryWet;

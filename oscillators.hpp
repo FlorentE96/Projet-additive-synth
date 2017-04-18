@@ -8,7 +8,7 @@
 
 class Osc {
 public:
-    enum note2Freq   //link a frequencie to a note
+    enum note2Freq   //link a frequency to a note
                      {DO_0=16    ,RE_0=18    ,MI_0=20    ,FA_0=22     ,SOL_0=24   ,LA_0=27   ,SI_0=31,
                       DOd_0=17   ,REd_0=20   ,FAd_0=23   ,SOLd_0=26   ,LAd_0=29   ,
                       DO_1=33    ,RE_1=37    ,MI_1=41    ,FA_1=44     ,SOL_1=49   ,LA_1=55   ,SI_1=62,

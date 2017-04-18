@@ -9,6 +9,7 @@
 #include "filter.hpp"
 #include "ADSR.hpp"
 #include "RtMidi.h"
+#include "effects.hpp"
 
 class synthEngine
 {
@@ -24,13 +25,11 @@ public:
     Osc * osc1;
     Filter * filt1;
     ADSR * env1;
+    Echo * echo1;
     void mycallback( double deltatime, std::vector< unsigned char > *message);
 
     static void s_mycallback( double deltatime, std::vector< unsigned char > *message, void *userData )
     {
-//      return ((synthEngine*)userData)
-//         ->mycallback(deltatime, message);
-
         ((synthEngine*)userData)->mycallback(deltatime, message);
     }
 

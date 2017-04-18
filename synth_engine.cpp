@@ -7,6 +7,7 @@ synthEngine::synthEngine()
     osc1 = new Osc(wavetable_sine, DEFAULT_FREQ);
     filt1 = new Filter(LPF, 1764, 1.0f, 2);
     env1 = new ADSR;
+    echo1 = new Echo(1.0f, 0.5f, 0.5f);
 
     midiIn = new RtMidiIn();
     if ( midiIn->getPortCount() == 0 ) {
@@ -38,6 +39,7 @@ synthEngine::~synthEngine()
     delete osc1;
     delete env1;
     delete filt1;
+    delete echo1;
     delete midiIn;
 
 
@@ -71,6 +73,7 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
         //acquire new osc value
         myData.left = (short)((osc1->process()*env1->process())/10);
         myData.left = filt1->filterCompute(myData.left);
+        myData.left = echo1->echoEffect(myData.left);
         myData.right = myData.left;
 
 

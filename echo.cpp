@@ -1,4 +1,8 @@
+#include <cmath>
+#include <iostream>
+#include <fstream>
 #include "effects.hpp"
+#include "global.hpp"
 
 
 
@@ -78,7 +82,7 @@ Echo::~Echo(){
 }
 int16_t Echo::echoEffect (int16_t input){
   if(status == ON){
-    return ( (int16_t)(DryWet*input +(1-DryWet)*echoCompute(input)) );
+    return ( (int16_t)(DryWet*input +(1-DryWet)*echoComputev2(input)) );
   }
   else{
     return input;
@@ -132,7 +136,7 @@ void Echo::storeSamples(int16_t input, uint32_t i){
 }
 
 
-
+/*
 bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray){
 
     ofstream file;
@@ -184,3 +188,4 @@ int main(int argc, char* argv[]){
 
 	return 0;
 }
+*/

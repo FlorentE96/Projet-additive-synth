@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <cstdint>
 #include <cmath>
+#include <ctime>
 #include <iostream>
 #include <fstream>
 #include "portaudio.h"
@@ -55,6 +56,14 @@ private slots:
     void on_selectSine_toggled(bool checked);
 
     void on_selectSaw3_toggled(bool checked);
+
+    void on_echoStatus_stateChanged(int arg1);
+
+    void on_echoDelay_sliderMoved(int position);
+
+    void on_echoFb_sliderMoved(int position);
+
+    void on_echoDryWet_sliderMoved(int position);
 
 private:
     Ui::MainWindow *ui;

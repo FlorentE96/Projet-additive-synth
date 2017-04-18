@@ -136,3 +136,24 @@ void MainWindow::on_selectSaw3_toggled(bool checked)
     if(checked)
         synth->osc1->setWF(wavetable_saw3);
 }
+
+void MainWindow::on_echoStatus_stateChanged(int arg1)
+{
+    if(arg1) synth->echo1->setStatus(ON);
+    else synth->echo1->setStatus(OFF);
+}
+
+void MainWindow::on_echoDelay_sliderMoved(int position)
+{
+    //synth->echo1->setTd((float)position/100);
+}
+
+void MainWindow::on_echoFb_sliderMoved(int position)
+{
+    synth->echo1->setFb((float)position/100);
+}
+
+void MainWindow::on_echoDryWet_sliderMoved(int position)
+{
+    synth->echo1->setDryWet((float)position/100);
+}
