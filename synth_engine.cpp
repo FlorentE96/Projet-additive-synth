@@ -1,3 +1,4 @@
+#include "ui_mainwindow.h"
 #include "mainwindow.h"
 #include "synth_engine.hpp"
 
@@ -8,7 +9,6 @@ synthEngine::synthEngine(Ui::MainWindow *_ui)
     env1 = new ADSR;
     echo1 = new Echo(1.0f, 0.5f, 0.5f);
     ui = _ui;
-
 
     midiIn = new RtMidiIn();
     if ( midiIn->getPortCount() == 0 ) {
@@ -115,6 +115,7 @@ void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *me
       if(id_note == 8 ){
           uint32_t f = (uint32_t)(((float)3000/128)*value);
           if (f<1) f=1;
+
           ui->filterCutoffDial->setValue(f);
           //filt1->setFc(f);
       }

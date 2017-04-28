@@ -10,6 +10,7 @@
 #include "ADSR.hpp"
 #include "RtMidi.h"
 #include "effects.hpp"
+#include "mainwindow.h"
 
 class synthEngine
 {
@@ -26,8 +27,6 @@ public:
     Filter * filt1;
     ADSR * env1;
     Echo * echo1;
-    Ui::MainWindow *ui;
-
 
     void mycallback( double deltatime, std::vector< unsigned char > *message);
 
@@ -59,6 +58,7 @@ private:
     PaStream * stream;
     RtMidiIn * midiIn;
     paTestData myData;
+    Ui::MainWindow *ui;
 };
 
 #endif // SYNTH_ENGINE_HPP

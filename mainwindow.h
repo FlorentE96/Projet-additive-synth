@@ -10,12 +10,12 @@
 #include <iostream>
 #include <fstream>
 
+class synthEngine;
+
 namespace Ui {
 class MainWindow;
 }
 
-//#include "synth_engine.hpp"
-class synthEngine;
 
 class MainWindow : public QMainWindow
 {
