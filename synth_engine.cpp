@@ -113,36 +113,29 @@ void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *me
 
   else if(id_key == 176){ //Potentiometer or other button
       if(id_note == 8 ){
-          uint32_t f = (uint32_t)(((float)3000/128)*value);
-          if (f<1) f=1;
-
+          uint32_t f = (uint32_t)scale(value, 0, 127, ui->filterCutoffDial->minimum(), ui->filterCutoffDial->maximum());
           ui->filterCutoffDial->setValue(f);
-          //filt1->setFc(f);
       }
       else if (id_note == 9){
-          float q = ((float)10/128)*value;
-          if (q > 1.0f) q=1.0f;
-          filt1->setQ(q );
+          float q = scale(value, 0, 127, ui->filterQDial->minimum() , ui->filterQDial->maximum());
+          ui->filterQDial->setValue((int)q);
+          //filt1->setQ(q );
       }
       else if(id_note == 13){
-          float q = ((float)10/128)*value;
-          if (q > 1.0f) q=1.0f;
-          env1->setAttackTime(q);
+          float q = scale(value, 0, 127, ui->attackSlider->minimum() , ui->attackSlider->maximum());
+          ui->attackSlider->setValue((int)q);
       }
       else if(id_note == 14){
-          float q = ((float)10/128)*value;
-          if (q > 1.0f) q=1.0f;
-          env1->setDecayTime(q);
+          float q = scale(value, 0, 127, ui->decaySlider->minimum() , ui->decaySlider->maximum());
+          ui->decaySlider->setValue((int)q);
       }
       else if(id_note == 15){
-          float q = ((float)10/128)*value;
-          if (q > 1.0f) q=1.0f;
-          env1->setSustainLevel(q);
+          float q = scale(value, 0, 127, ui->sustainSlider->minimum() , ui->sustainSlider->maximum());
+          ui->sustainSlider->setValue((int)q);
       }
       else if(id_note == 7){
-          float q = ((float)10/128)*value;
-          if (q > 1.0f) q=1.0f;
-          env1->setReleaseTime(q);
+          float q = scale(value, 0, 127, ui->releaseSlider->minimum() , ui->releaseSlider->maximum());
+          ui->releaseSlider->setValue((int)q);
       }
   }
 }

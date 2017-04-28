@@ -26,19 +26,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_oscPitchDial_sliderMoved(int position);
-
-    void on_filterCutoffDial_sliderMoved(int position);
-
-    void on_filterQDial_sliderMoved(int position);
-
-    void on_attackSlider_sliderMoved(int position);
-
-    void on_decaySlider_sliderMoved(int position);
-
-    void on_sustainSlider_sliderMoved(int position);
-
-    void on_releaseSlider_sliderMoved(int position);
 
     void on_radioButton_toggled(bool checked);
 
@@ -60,11 +47,25 @@ private slots:
 
     void on_echoStatus_stateChanged(int arg1);
 
-    void on_echoDelay_sliderMoved(int position);
+    void on_filterCutoffDial_valueChanged(int value);
 
-    void on_echoFb_sliderMoved(int position);
+    void on_filterQDial_valueChanged(int value);
 
-    void on_echoDryWet_sliderMoved(int position);
+    void on_oscPitchDial_valueChanged(int value);
+
+    void on_attackSlider_valueChanged(int value);
+
+    void on_decaySlider_valueChanged(int value);
+
+    void on_sustainSlider_valueChanged(int value);
+
+    void on_echoDelay_valueChanged(int value);
+
+    void on_echoFb_valueChanged(int value);
+
+    void on_echoDryWet_valueChanged(int value);
+
+    void on_releaseSlider_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;

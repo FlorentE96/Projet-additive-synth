@@ -9,30 +9,29 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    synth = new synthEngine(ui);
+    synth->env1->gate(OFF);
+
     ui->setupUi(this);
 
     ui->oscPitchDial->setMaximum(1000);
     ui->oscPitchDial->setMinimum(50);
     ui->oscPitchDial->setValue(440);
-    ui->lcdnumber->display(440);
 
-    ui->filterCutoffDial->setMaximum(1000);
-    ui->filterCutoffDial->setMinimum(50);
+    ui->filterCutoffDial->setMaximum(3000);
+    ui->filterCutoffDial->setMinimum(20);
     ui->filterCutoffDial->setValue(1000);
-    ui->lcdCutoff->display(3000);
 
     ui->filterQDial->setMaximum(1000);
     ui->filterQDial->setMinimum(101);
     ui->filterQDial->setValue(102);
-    ui->lcdRes->display(1.02);
 
     ui->attackSlider->setMaximum(150);
     ui->decaySlider->setMaximum(10);
     ui->releaseSlider->setMaximum(150);
     ui->sustainSlider->setMaximum(1000);
 
-    synth = new synthEngine(ui);
-    synth->env1->gate(OFF);
+
 
 }
 
@@ -41,43 +40,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_oscPitchDial_sliderMoved(int position)
-{
-    synth->osc1->setFrequency((uint32_t)position);
-    ui->lcdnumber->display(position);
-}
 
-void MainWindow::on_filterCutoffDial_sliderMoved(int position)
-{
-    synth->filt1->setFc((uint32_t)position);
-    ui->lcdCutoff->display(position);
-}
-
-void MainWindow::on_filterQDial_sliderMoved(int position)
-{
-    synth->filt1->setQ((float)position/100);
-    ui->lcdRes->display((float)position/100);
-}
-
-void MainWindow::on_attackSlider_sliderMoved(int position)
-{
-    synth->env1->setAttackTime((float)position/100);
-}
-
-void MainWindow::on_decaySlider_sliderMoved(int position)
-{
-    synth->env1->setDecayTime((float)position/100);
-}
-
-void MainWindow::on_sustainSlider_sliderMoved(int position)
-{
-    synth->env1->setSustainLevel((float)position/1000);
-}
-
-void MainWindow::on_releaseSlider_sliderMoved(int position)
-{
-    synth->env1->setReleaseTime((float)position/100);
-}
 
 void MainWindow::on_radioButton_toggled(bool checked)
 {
@@ -144,17 +107,61 @@ void MainWindow::on_echoStatus_stateChanged(int arg1)
     else synth->echo1->setStatus(OFF);
 }
 
-void MainWindow::on_echoDelay_sliderMoved(int position)
+
+void MainWindow::on_filterCutoffDial_valueChanged(int value)
 {
-    //synth->echo1->setTd((float)position/100);
+    synth->filt1->setFc((uint32_t)value);
+    ui->lcdCutoff->display(value);
+
 }
 
-void MainWindow::on_echoFb_sliderMoved(int position)
+void MainWindow::on_filterQDial_valueChanged(int value)
 {
-    synth->echo1->setFb((float)position/100);
+     synth->filt1->setQ(((float)value/100));
+     ui->lcdRes->display((float)value/100);
 }
 
-void MainWindow::on_echoDryWet_sliderMoved(int position)
+void MainWindow::on_oscPitchDial_valueChanged(int value)
 {
-    synth->echo1->setDryWet((float)position/100);
+    synth->osc1->setFrequency((uint32_t)value);
+    ui->lcdnumber->display(value);
 }
+
+
+
+void MainWindow::on_attackSlider_valueChanged(int value)
+{
+    synth->env1->setAttackTime((float)value/100);
+}
+
+void MainWindow::on_decaySlider_valueChanged(int value)
+{
+    synth->env1->setDecayTime((float)value/100);
+}
+
+void MainWindow::on_sustainSlider_valueChanged(int value)
+{
+    synth->env1->setSustainLevel((float)value/1000);
+}
+
+void MainWindow::on_releaseSlider_valueChanged(int value)
+{
+    synth->env1->setReleaseTime((float)value/100);
+}
+
+
+void MainWindow::on_echoDelay_valueChanged(int value)
+{
+    //synth->echo1->setTd((float)value/100);
+}
+
+void MainWindow::on_echoFb_valueChanged(int value)
+{
+    synth->echo1->setFb((float)value/100);
+}
+
+void MainWindow::on_echoDryWet_valueChanged(int value)
+{
+    synth->echo1->setDryWet((float)value/100);
+}
+
