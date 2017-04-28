@@ -17,8 +17,8 @@
       <brush brushstyle="SolidPattern">
        <color alpha="255">
         <red>0</red>
-        <green>170</green>
-        <blue>0</blue>
+        <green>17</green>
+        <blue>170</blue>
        </color>
       </brush>
      </colorrole>
@@ -70,9 +70,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>35</red>
-        <green>197</green>
-        <blue>255</blue>
+        <red>255</red>
+        <green>132</green>
+        <blue>101</blue>
        </color>
       </brush>
      </colorrole>
@@ -118,8 +118,8 @@
       <brush brushstyle="SolidPattern">
        <color alpha="255">
         <red>0</red>
-        <green>170</green>
-        <blue>0</blue>
+        <green>17</green>
+        <blue>170</blue>
        </color>
       </brush>
      </colorrole>
@@ -171,9 +171,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>35</red>
-        <green>197</green>
-        <blue>255</blue>
+        <red>255</red>
+        <green>132</green>
+        <blue>101</blue>
        </color>
       </brush>
      </colorrole>
@@ -263,18 +263,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>35</red>
-        <green>197</green>
-        <blue>255</blue>
+        <red>255</red>
+        <green>132</green>
+        <blue>101</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>35</red>
-        <green>197</green>
-        <blue>255</blue>
+        <red>255</red>
+        <green>132</green>
+        <blue>101</blue>
        </color>
       </brush>
      </colorrole>
@@ -834,8 +834,8 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="filterOrder"/>
   <buttongroup name="oscWF"/>
+  <buttongroup name="filterOrder"/>
   <buttongroup name="filterType"/>
  </buttongroups>
 </ui>

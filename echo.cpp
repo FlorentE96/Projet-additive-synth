@@ -7,7 +7,7 @@
 
 
 
-void Echo::setD(uint32_t _D){
+void Echo::setD(uint32_t _D) {
     if(_D > MAX_DELAY){
 				cout << "Maximum delay is 5 sec" << endl;
         D = MAX_DELAY;
@@ -123,11 +123,11 @@ void Echo::shiftSamples (int16_t input){
 
     for(uint32_t i = 0; i< 3*D+1; i++){
         if (i == 3*D ) {
-					delayed_sample[i] = input;
-				}
-				else{
-        	delayed_sample[i] = delayed_sample[i+1];
-				}
+            delayed_sample[i] = input;
+        }
+        else{
+            delayed_sample[i] = delayed_sample[i+1];
+        }
 	}
 }
 
