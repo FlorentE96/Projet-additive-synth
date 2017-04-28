@@ -9,12 +9,13 @@
 #include <ctime>
 #include <iostream>
 #include <fstream>
-#include "portaudio.h"
-#include "synth_engine.hpp"
 
 namespace Ui {
 class MainWindow;
 }
+
+//#include "synth_engine.hpp"
+class synthEngine;
 
 class MainWindow : public QMainWindow
 {

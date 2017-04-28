@@ -1,13 +1,14 @@
+#include "mainwindow.h"
 #include "synth_engine.hpp"
 
-
-
-synthEngine::synthEngine()
+synthEngine::synthEngine(Ui::MainWindow *_ui)
 {
     osc1 = new Osc(wavetable_sine, DEFAULT_FREQ);
     filt1 = new Filter(LPF, 1764, 1.0f, 2);
     env1 = new ADSR;
     echo1 = new Echo(1.0f, 0.5f, 0.5f);
+    ui = _ui;
+
 
     midiIn = new RtMidiIn();
     if ( midiIn->getPortCount() == 0 ) {
@@ -102,7 +103,7 @@ void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *me
         else{
             frequency = (uint32_t)(pow(2, ((double)(id_note-69))/((double)12) )*440.0f);
         }
-        cout << "ID : " << id_note <<" | Freq : "<< frequency << endl;
+        //cout << "ID : " << id_note <<" | Freq : "<< frequency << endl;
         osc1->setFrequency(frequency);
         env1->gate(ON);
   }
@@ -114,12 +115,33 @@ void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *me
       if(id_note == 8 ){
           uint32_t f = (uint32_t)(((float)3000/128)*value);
           if (f<1) f=1;
-          filt1->setFc(f);
+          ui->filterCutoffDial->setValue(f);
+          //filt1->setFc(f);
       }
       else if (id_note == 9){
           float q = ((float)10/128)*value;
-          if (q < 1.0f) q=1.0f;
+          if (q > 1.0f) q=1.0f;
           filt1->setQ(q );
+      }
+      else if(id_note == 13){
+          float q = ((float)10/128)*value;
+          if (q > 1.0f) q=1.0f;
+          env1->setAttackTime(q);
+      }
+      else if(id_note == 14){
+          float q = ((float)10/128)*value;
+          if (q > 1.0f) q=1.0f;
+          env1->setDecayTime(q);
+      }
+      else if(id_note == 15){
+          float q = ((float)10/128)*value;
+          if (q > 1.0f) q=1.0f;
+          env1->setSustainLevel(q);
+      }
+      else if(id_note == 7){
+          float q = ((float)10/128)*value;
+          if (q > 1.0f) q=1.0f;
+          env1->setReleaseTime(q);
       }
   }
 }

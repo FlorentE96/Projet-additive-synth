@@ -20,12 +20,15 @@ public:
         int16_t right;
     }
     paTestData;
-    synthEngine();
+    synthEngine(Ui::MainWindow *_ui);
     ~synthEngine();
     Osc * osc1;
     Filter * filt1;
     ADSR * env1;
     Echo * echo1;
+    Ui::MainWindow *ui;
+
+
     void mycallback( double deltatime, std::vector< unsigned char > *message);
 
     static void s_mycallback( double deltatime, std::vector< unsigned char > *message, void *userData )

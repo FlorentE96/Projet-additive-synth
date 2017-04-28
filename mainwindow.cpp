@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "synth_engine.hpp"
 #include "ui_mainwindow.h"
 
 using namespace std;
@@ -26,11 +27,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lcdRes->display(1.02);
 
     ui->attackSlider->setMaximum(150);
-    ui->decaySlider->setMaximum(150);
+    ui->decaySlider->setMaximum(10);
     ui->releaseSlider->setMaximum(150);
     ui->sustainSlider->setMaximum(1000);
 
-    synth = new synthEngine();
+    synth = new synthEngine(ui);
     synth->env1->gate(OFF);
 
 }

@@ -29,7 +29,7 @@ SOURCES += main.cpp\
     RtMidi.cpp \
     ADSR.cpp \
     filter.cpp \
-    #echo.cpp \
+    echo.cpp \
     oscillators.cpp \
     LUTs.cpp \
     synth_engine.cpp
@@ -38,7 +38,7 @@ HEADERS  += mainwindow.h \
     portaudio.h \
     RtMidi.h \
     ADSR.hpp \
-    #effects.hpp \
+    effects.hpp \
     filter.hpp \
     global.hpp \
     LUTs.hpp \
