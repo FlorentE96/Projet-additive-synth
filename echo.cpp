@@ -4,9 +4,6 @@
 #include "effects.hpp"
 #include "global.hpp"
 
-
-
-
 void Echo::setD(uint32_t _D) {
     if(_D > MAX_DELAY){
 				cout << "Maximum delay is 5 sec" << endl;

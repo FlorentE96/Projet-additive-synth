@@ -1,3 +1,6 @@
+#ifndef FILTER_H
+#define FILTER_H
+
 #include <cstdint>
 #include <cmath>
 #include "global.hpp"
@@ -80,3 +83,5 @@ public:
 bool loadArrayFromFile(const char* filename, int16_t* array, uint32_t lenArray);
 int getLenArrayFromFile(const char* filename);
 bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray);
+
+#endif
