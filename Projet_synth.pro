@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     echo.cpp \
     oscillators.cpp \
     LUTs.cpp \
-    synth_engine.cpp
+    synth_engine.cpp \
+    reverb.cpp
 
 HEADERS  += mainwindow.h \
     portaudio.h \
@@ -43,7 +44,8 @@ HEADERS  += mainwindow.h \
     global.hpp \
     LUTs.hpp \
     oscillators.hpp \
-    synth_engine.hpp
+    synth_engine.hpp \
+    reverb.hpp
 
 FORMS    += mainwindow.ui
 
