@@ -1,13 +1,9 @@
 # ToDo list
 
-- (1)  Fix Echo
 - (2)  Reverb
 - (3)  Clean inclusion structure
 - (4)  Change setters to initialisation lists
-- (5)  Fix sound "clipping" in LF
 - (7)  Use MPK Pads to change filter type
-- (8)  Gate problem for 2 notes (retrigger)
-- (9)  Change everything to float/double and see if it improves quality
 - (10) Latency (multithread)
 
 # Substractive synthesizer in C++
