@@ -87,11 +87,16 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
 
 void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *message )
 {
+  static uint32_t gate = 0;
+  static uint32_t freq_buf[10];
+
   uint32_t id_key = (uint32_t)message->at(0);
   uint32_t id_note = (uint32_t)message->at(1);
   uint32_t value = (uint32_t)message->at(2);
   (void) deltatime;
   if(id_key == 144){ //Press Key
+        gate++;
+
         uint32_t frequency;
         if (id_note < 69){
             frequency = (uint32_t)(1/pow(2, ((double)(69-id_note))/((double)12) )*440.0f);
@@ -100,11 +105,19 @@ void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *me
             frequency = (uint32_t)(pow(2, ((double)(id_note-69))/((double)12) )*440.0f);
         }
         //cout << "ID : " << id_note <<" | Freq : "<< frequency << endl;
-        osc1->setFrequency(frequency);
+        freq_buf[gate-1] = frequency;
+        cout << gate << endl;
+        cout << freq_buf[gate-1] << endl;
+        osc1->setFrequency(freq_buf[gate-1]);
         env1->gate(ON);
   }
   else if(id_key == 128){ //Release Key
-        env1->gate(OFF);
+        gate--;
+        if(gate == 0)
+            env1->gate(OFF);
+        else
+            osc1->setFrequency(freq_buf[gate-1]);
+
   }
 
   else if(id_key == 176){ //Potentiometer or other button
