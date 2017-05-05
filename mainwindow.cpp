@@ -121,8 +121,8 @@ void MainWindow::on_filterCutoffDial_valueChanged(int value)
 
 void MainWindow::on_filterQDial_valueChanged(int value)
 {
-     synth->filt1->setQ(((float)value/100));
-     ui->lcdRes->display((float)value/100);
+     synth->filt1->setQ(((double)value/100));
+     ui->lcdRes->display((double)value/100);
 }
 
 
@@ -130,37 +130,33 @@ void MainWindow::on_filterQDial_valueChanged(int value)
 
 void MainWindow::on_attackSlider_valueChanged(int value)
 {
-    synth->env1->setAttackTime((float)value/100);
+    synth->env1->setAttackTime((double)value/100);
 }
 
 void MainWindow::on_decaySlider_valueChanged(int value)
 {
-    synth->env1->setDecayTime((float)value/100);
+    synth->env1->setDecayTime((double)value/100);
 }
 
 void MainWindow::on_sustainSlider_valueChanged(int value)
 {
-    synth->env1->setSustainLevel((float)value/1000);
+    synth->env1->setSustainLevel((double)value/1000);
 }
 
 void MainWindow::on_releaseSlider_valueChanged(int value)
 {
-    synth->env1->setReleaseTime((float)value/100);
+    synth->env1->setReleaseTime((double)value/100);
 }
 
 
 void MainWindow::on_echoDelay_valueChanged(int value)
 {
-<<<<<<< HEAD
-    synth->echo1->setDelayTime((float)value/1000);
-=======
-    synth->echo1->setTd((float)value/100);
->>>>>>> origin/master
+    synth->echo1->setDelayTime((double)value/1000);
 }
 
 void MainWindow::on_echoFb_valueChanged(int value)
 {
-    synth->echo1->setFeedbackGain((float)value/1000);
+    synth->echo1->setFeedbackGain((double)value/1000);
 }
 
 void MainWindow::on_echoDryWet_valueChanged(int value)

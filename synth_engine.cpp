@@ -5,7 +5,7 @@
 synthEngine::synthEngine(Ui::MainWindow *_ui)
 {
     osc1 = new Osc(wavetable_sine, DEFAULT_FREQ);
-    filt1 = new Filter(LPF, 1764, 1.0f, 2);
+    filt1 = new Filter(LPF, 1764, 1.0, 2);
     env1 = new ADSR;
     echo1 = new Echo();
     ui = _ui;
@@ -94,10 +94,10 @@ void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *me
   if(id_key == 144){ //Press Key
         uint32_t frequency;
         if (id_note < 69){
-            frequency = (uint32_t)(1/pow(2, ((double)(69-id_note))/((double)12) )*440.0f);
+            frequency = (uint32_t)(1/pow(2, ((double)(69-id_note))/((double)12) )*440.0);
         }
         else{
-            frequency = (uint32_t)(pow(2, ((double)(id_note-69))/((double)12) )*440.0f);
+            frequency = (uint32_t)(pow(2, ((double)(id_note-69))/((double)12) )*440.0);
         }
         //cout << "ID : " << id_note <<" | Freq : "<< frequency << endl;
         osc1->setFrequency(frequency);
@@ -113,24 +113,24 @@ void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *me
           ui->filterCutoffDial->setValue(f);
       }
       else if (id_note == 9){
-          float q = scale(value, 0, 127, ui->filterQDial->minimum() , ui->filterQDial->maximum());
+          double q = scale(value, 0, 127, ui->filterQDial->minimum() , ui->filterQDial->maximum());
           ui->filterQDial->setValue((int)q);
           //filt1->setQ(q );
       }
       else if(id_note == 13){
-          float q = scale(value, 0, 127, ui->attackSlider->minimum() , ui->attackSlider->maximum());
+          double q = scale(value, 0, 127, ui->attackSlider->minimum() , ui->attackSlider->maximum());
           ui->attackSlider->setValue((int)q);
       }
       else if(id_note == 14){
-          float q = scale(value, 0, 127, ui->decaySlider->minimum() , ui->decaySlider->maximum());
+          double q = scale(value, 0, 127, ui->decaySlider->minimum() , ui->decaySlider->maximum());
           ui->decaySlider->setValue((int)q);
       }
       else if(id_note == 15){
-          float q = scale(value, 0, 127, ui->sustainSlider->minimum() , ui->sustainSlider->maximum());
+          double q = scale(value, 0, 127, ui->sustainSlider->minimum() , ui->sustainSlider->maximum());
           ui->sustainSlider->setValue((int)q);
       }
       else if(id_note == 7){
-          float q = scale(value, 0, 127, ui->releaseSlider->minimum() , ui->releaseSlider->maximum());
+          double q = scale(value, 0, 127, ui->releaseSlider->minimum() , ui->releaseSlider->maximum());
           ui->releaseSlider->setValue((int)q);
       }
   }

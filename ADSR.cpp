@@ -13,7 +13,7 @@ ADSR::ADSR() {
   reset();
 }
 
-ADSR::ADSR(float attack, float decay, float sustain, float release) {
+ADSR::ADSR(double attack, double decay, double sustain, double release) {
   setAttack(attack, DEFAULT_SLOPE);
   setDecay(decay, DEFAULT_SLOPE);
   setSustainLevel(sustain);
@@ -25,102 +25,102 @@ ADSR::~ADSR(void) {
   //
 }
 
-void ADSR::setAttack(float _attackTime, float _attackTarget) {
+void ADSR::setAttack(double _attackTime, double _attackTarget) {
   attackTime = _attackTime;
   attackTarget = _attackTarget;
   attackRate = _attackTime * SAMPLE_RATE; // attack rate in samples
-  attackCoef = exp(-log((1.0f + _attackTarget) / _attackTarget) / attackRate);
-  attackBase = (1.0f + _attackTarget) * (1.0f - attackCoef);
+  attackCoef = exp(-log((1.0 + _attackTarget) / _attackTarget) / attackRate);
+  attackBase = (1.0 + _attackTarget) * (1.0 - attackCoef);
 }
 
-void ADSR::setAttackTime(float _attackTime) {
+void ADSR::setAttackTime(double _attackTime) {
   attackTime = _attackTime;
   attackRate = _attackTime * SAMPLE_RATE; // attack rate in samples
-  attackCoef = exp(-log((1.0f + attackTarget) / attackTarget) / attackRate);
-  attackBase = (1.0f + attackTarget) * (1.0f - attackCoef);
+  attackCoef = exp(-log((1.0 + attackTarget) / attackTarget) / attackRate);
+  attackBase = (1.0 + attackTarget) * (1.0 - attackCoef);
 }
 
-void ADSR::setAttackSlope(float _attackTarget) {
+void ADSR::setAttackSlope(double _attackTarget) {
   attackTarget = _attackTarget;
-  attackCoef = exp(-log((1.0f + _attackTarget) / _attackTarget) / attackRate);
-  attackBase = (1.0f + attackTarget) * (1.0f - attackCoef);
+  attackCoef = exp(-log((1.0 + _attackTarget) / _attackTarget) / attackRate);
+  attackBase = (1.0 + attackTarget) * (1.0 - attackCoef);
 }
 
-void ADSR::setDecay(float _decayTime, float _decayTarget) {
+void ADSR::setDecay(double _decayTime, double _decayTarget) {
   decayTime = _decayTime;
   decayTarget = _decayTarget;
   decayRate = _decayTime * SAMPLE_RATE; // decay rate in samples
-  decayCoef = exp(-log((1.0f + _decayTarget) / _decayTarget) / decayRate);
-  decayBase = (sustainLevel - _decayTarget) * (1.0f - decayCoef);
+  decayCoef = exp(-log((1.0 + _decayTarget) / _decayTarget) / decayRate);
+  decayBase = (sustainLevel - _decayTarget) * (1.0 - decayCoef);
 }
 
-void ADSR::setDecayTime(float _decayTime) {
+void ADSR::setDecayTime(double _decayTime) {
   decayTime = _decayTime;
   decayRate = _decayTime * SAMPLE_RATE; // decay rate in samples
-  decayCoef = exp(-log((1.0f + decayTarget) / decayTarget) / decayRate);
-  decayBase = (sustainLevel - decayTarget) * (1.0f - decayCoef);
+  decayCoef = exp(-log((1.0 + decayTarget) / decayTarget) / decayRate);
+  decayBase = (sustainLevel - decayTarget) * (1.0 - decayCoef);
 }
 
-void ADSR::setDecaySlope(float _decayTarget) {
+void ADSR::setDecaySlope(double _decayTarget) {
   decayTarget = _decayTarget;
-  decayCoef = exp(-log((1.0f + _decayTarget) / _decayTarget) / decayRate);
-  decayBase = (sustainLevel - _decayTarget) * (1.0f - decayCoef);
+  decayCoef = exp(-log((1.0 + _decayTarget) / _decayTarget) / decayRate);
+  decayBase = (sustainLevel - _decayTarget) * (1.0 - decayCoef);
 }
 
-void ADSR::setRelease(float _releaseTime, float _releaseTarget) {
+void ADSR::setRelease(double _releaseTime, double _releaseTarget) {
   releaseTime = _releaseTime;
   releaseTarget = _releaseTarget;
   releaseRate = _releaseTime * SAMPLE_RATE; // release rate in samples
-  releaseCoef = exp(-log((1.0f + _releaseTarget) / _releaseTarget) / releaseRate);
-  releaseBase = -_releaseTarget * (1.0f - releaseCoef);
+  releaseCoef = exp(-log((1.0 + _releaseTarget) / _releaseTarget) / releaseRate);
+  releaseBase = -_releaseTarget * (1.0 - releaseCoef);
 }
 
-void ADSR::setReleaseTime(float _releaseTime) {
+void ADSR::setReleaseTime(double _releaseTime) {
   releaseTime = _releaseTime;
   releaseRate = _releaseTime * SAMPLE_RATE; // release rate in samples
-  releaseCoef = exp(-log((1.0f + releaseTarget) / releaseTarget) / releaseRate);
-  releaseBase = (-releaseTarget) * (1.0f - releaseCoef);
+  releaseCoef = exp(-log((1.0 + releaseTarget) / releaseTarget) / releaseRate);
+  releaseBase = (-releaseTarget) * (1.0 - releaseCoef);
 }
 
-void ADSR::setReleaseSlope(float _releaseTarget) {
+void ADSR::setReleaseSlope(double _releaseTarget) {
   releaseTarget = _releaseTarget;
   releaseCoef = exp(-log((1.0 + releaseTarget) / releaseTarget) / releaseRate);
   releaseBase = (-releaseTarget) * (1.0 - releaseCoef);
 }
 
-void ADSR::setSustainLevel(float _sustainLevel) {
-  if(_sustainLevel > 1.0f)
-    _sustainLevel = 1.0f;
-  else if(_sustainLevel < 0.0f)
-    _sustainLevel = 0.0f;
+void ADSR::setSustainLevel(double _sustainLevel) {
+  if(_sustainLevel > 1.0)
+    _sustainLevel = 1.0;
+  else if(_sustainLevel < 0.0)
+    _sustainLevel = 0.0;
   sustainLevel = _sustainLevel;
 }
 
-float ADSR::getAttackTime(void) {
+double ADSR::getAttackTime(void) {
   return attackTime;
 }
 
-float ADSR::getAttackSlope(void) {
+double ADSR::getAttackSlope(void) {
   return attackTarget;
 }
 
-float ADSR::getDecayTime(void) {
+double ADSR::getDecayTime(void) {
   return decayTime;
 }
 
-float ADSR::getDecaySlope(void) {
+double ADSR::getDecaySlope(void) {
   return decayTarget;
 }
 
-float ADSR::getReleaseTime(void) {
+double ADSR::getReleaseTime(void) {
   return releaseTime;
 }
 
-float ADSR::getReleaseSlope(void) {
+double ADSR::getReleaseSlope(void) {
   return releaseTarget;
 }
 
-float ADSR::getSustainLevel(void) {
+double ADSR::getSustainLevel(void) {
   return sustainLevel;
 }
 
@@ -128,18 +128,18 @@ State ADSR::getState(void) {
   return state;
 }
 
-float ADSR::getValue(void) {
+double ADSR::getValue(void) {
   return value;
 }
 
-float ADSR::process(void) {
+double ADSR::process(void) {
   switch (state) {
     case stateIdle:
       break;
     case stateAttack:
       value = attackBase + value * attackCoef;
-      if(value >= 1.0f) {
-        value = 1.0f;
+      if(value >= 1.0) {
+        value = 1.0;
         state = stateDecay;
       }
       break;
@@ -154,8 +154,8 @@ float ADSR::process(void) {
       break;
     case stateRelease:
       value = releaseBase + value * releaseCoef;
-      if(value <= 0.0f) {
-        value = 0.0f;
+      if(value <= 0.0) {
+        value = 0.0;
         state = stateIdle;
       }
       break;
@@ -164,7 +164,7 @@ float ADSR::process(void) {
 }
 
 void ADSR::reset(void) {
-  value = 0.0f;
+  value = 0.0;
   state = stateIdle;
 }
 

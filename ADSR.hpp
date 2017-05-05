@@ -1,11 +1,11 @@
 #ifndef ADSR_H
 #define ADSR_H
 
-#define DEFAULT_SUSTAIN (0.8f)
-#define DEFAULT_SLOPE   (0.01f)
-#define DEFAULT_ATTACK  (0.01f)
-#define DEFAULT_DECAY   (0.2f)
-#define DEFAULT_RELEASE (0.5f)
+#define DEFAULT_SUSTAIN (0.8)
+#define DEFAULT_SLOPE   (0.01)
+#define DEFAULT_ATTACK  (0.01)
+#define DEFAULT_DECAY   (0.2)
+#define DEFAULT_RELEASE (0.5)
 
 
 typedef enum
@@ -21,41 +21,41 @@ class ADSR
 {
 public:
   ADSR();
-  ADSR(float attack, float decay, float sustain, float release);
+  ADSR(double attack, double decay, double sustain, double release);
   ~ADSR();
-  void setAttack(float _attackTime, float _attackTarget);
-  void setAttackTime(float _attackTime);
-  void setAttackSlope(float _attackTarget);
-  void setDecay(float _decayTime, float _decayTarget);
-  void setDecayTime(float _decayTime);
-  void setDecaySlope(float _decayTarget);
-  void setRelease(float _releaseTime, float _releaseTarget);
-  void setReleaseTime(float _releaseTime);
-  void setReleaseSlope(float _releaseSlope);
-  void setSustainLevel(float _sustainLevel);
-  float getAttackTime(void);
-  float getAttackSlope(void);
-  float getDecayTime(void);
-  float getDecaySlope(void);
-  float getReleaseTime(void);
-  float getReleaseSlope(void);
-  float getSustainLevel(void);
+  void setAttack(double _attackTime, double _attackTarget);
+  void setAttackTime(double _attackTime);
+  void setAttackSlope(double _attackTarget);
+  void setDecay(double _decayTime, double _decayTarget);
+  void setDecayTime(double _decayTime);
+  void setDecaySlope(double _decayTarget);
+  void setRelease(double _releaseTime, double _releaseTarget);
+  void setReleaseTime(double _releaseTime);
+  void setReleaseSlope(double _releaseSlope);
+  void setSustainLevel(double _sustainLevel);
+  double getAttackTime(void);
+  double getAttackSlope(void);
+  double getDecayTime(void);
+  double getDecaySlope(void);
+  double getReleaseTime(void);
+  double getReleaseSlope(void);
+  double getSustainLevel(void);
   State getState(void);
-  float getValue(void);
+  double getValue(void);
 
-  float process(void);
+  double process(void);
   void reset(void);
   void gate(int state);
 
 
 private:
-  float attackRate, decayRate, releaseRate;
-  float attackTime, decayTime, releaseTime;
-  float attackCoef, decayCoef, releaseCoef;
-  float attackBase, decayBase, releaseBase;
-  float attackTarget, decayTarget, releaseTarget;
-  float sustainLevel;
-  float value;
+  double attackRate, decayRate, releaseRate;
+  double attackTime, decayTime, releaseTime;
+  double attackCoef, decayCoef, releaseCoef;
+  double attackBase, decayBase, releaseBase;
+  double attackTarget, decayTarget, releaseTarget;
+  double sustainLevel;
+  double value;
   State state;
 };
 

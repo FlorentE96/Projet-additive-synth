@@ -2,7 +2,7 @@
 #define OSCILLATORS_H
 
 #define RES (1024)
-#define PHASE_FACTOR  ((float)RES/(float)SAMPLE_RATE) // factor between the phase and the array index
+#define PHASE_FACTOR  ((double)RES/(double)SAMPLE_RATE) // factor between the phase and the array index
 #define DEFAULT_WF (wavetable_sine)
 #define DEFAULT_FREQ (440)
 

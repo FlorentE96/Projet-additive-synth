@@ -11,7 +11,7 @@ void Filter::setFc_Init(uint32_t newFc){
 void Filter::setBandwidth_Init(uint32_t newBw){
   bw = newBw;
 }
-void Filter::setQ_Init(float newQ){
+void Filter::setQ_Init(double newQ){
   Q = newQ;
 }
 void Filter::setOrder_Init(uint32_t newOrder){
@@ -35,7 +35,7 @@ void Filter::setBandwidth(uint32_t newBw){
   bw = newBw;
   DesignFilter( filterType );
 }
-void Filter::setQ(float newQ){
+void Filter::setQ(double newQ){
   Q = newQ;
   DesignFilter( filterType );
 }
@@ -56,14 +56,14 @@ uint32_t Filter::getFc(){
 uint32_t Filter::getBandwidth(){
   return bw;
 }
-float Filter::getQ(){
+double Filter::getQ(){
   return Q;
 }
 uint32_t Filter::getOrder(){
   return order;
 }
 
-float Filter::getCoeff(uint32_t i){
+double Filter::getCoeff(uint32_t i){
   return coeff[i];
 }
 
@@ -78,7 +78,7 @@ void Filter::DesignFilter( filtType _filterType ){
   DesignHPF();
   }
   else if (_filterType == BPF){
-	DesignBPF();
+    DesignBPF();
   }
 
 }
@@ -86,16 +86,16 @@ void Filter::DesignLPF(void){
 
   cout << "LPF" << endl;
 
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha = 0.5f*( sin(wc / Q ));
+  wc = 2*M_PI*( ((double)Fc)/((double)Fs) );
+  alpha = 0.5*( sin(wc / Q ));
 
 
-  coeff[0] = 0.5f*(1.0f-cos(wc));
-  coeff[1] = 1.0f-cos(wc);
+  coeff[0] = 0.5*(1.0-cos(wc));
+  coeff[1] = 1.0-cos(wc);
   coeff[2] = coeff[0];
-  coeff[3] = 1.0f + alpha;
-  coeff[4] = -2.0f*cos(wc);
-  coeff[5] = 1.0f - alpha;
+  coeff[3] = 1.0 + alpha;
+  coeff[4] = -2.0*cos(wc);
+  coeff[5] = 1.0 - alpha;
 
 
 
@@ -104,16 +104,16 @@ void Filter::DesignLPF(void){
 void Filter::DesignHPF(void){
 
 
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha = 0.5f*( sin(wc / Q ));
+  wc = 2*M_PI*( ((double)Fc)/((double)Fs) );
+  alpha = 0.5*( sin(wc / Q ));
 
 
-  coeff[0] = 0.5f*(1.0f+cos(wc));
-  coeff[1] = -1.0f-cos(wc);
+  coeff[0] = 0.5*(1.0+cos(wc));
+  coeff[1] = -1.0-cos(wc);
   coeff[2] = coeff[0];
-  coeff[3] = 1.0f + alpha;
-  coeff[4] = -2.0f*cos(wc);
-  coeff[5] = 1.0f - alpha;
+  coeff[3] = 1.0 + alpha;
+  coeff[4] = -2.0*cos(wc);
+  coeff[5] = 1.0 - alpha;
 
 }
 
@@ -121,15 +121,15 @@ void Filter::DesignBPF(void){
 
   cout << "BPF" << endl;
 
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha =  (float)( sin(wc)/(2*Q)); //sinh( (0.5f*log(2.0f)*bw*(wc/sin(wc)) ) ));
+  wc = 2*M_PI*( ((double)Fc)/((double)Fs) );
+  alpha =  (double)( sin(wc)/(2*Q)); //sinh( (0.5*log(2.0)*bw*(wc/sin(wc)) ) ));
 
   coeff[0] = Q*alpha;
-  coeff[1] = 0.0f;
+  coeff[1] = 0.0;
   coeff[2] = -coeff[0];
-  coeff[3] = 1.0f + alpha;
-  coeff[4] = -2.0f*cos(wc);
-  coeff[5] = 1.0f - alpha;
+  coeff[3] = 1.0 + alpha;
+  coeff[4] = -2.0*cos(wc);
+  coeff[5] = 1.0 - alpha;
 
 
 
@@ -145,7 +145,7 @@ Filter::Filter(){
   DesignLPF();
 
 }
-Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order ){
+Filter::Filter(filtType _filterType, uint32_t _Fc, double _Q, uint32_t _order ){
   setOrder_Init(_order);
   setFc_Init(_Fc);
   setQ_Init(_Q);
@@ -157,7 +157,7 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order ){
 
 }
 
-Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order){
+Filter::Filter(filtType _filterType, uint32_t _Fc, double _Q, uint32_t _bw, uint32_t _order){
   setOrder_Init(_order);
   setFc_Init(_Fc);
   setQ_Init(_Q);
