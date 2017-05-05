@@ -51,8 +51,6 @@ private slots:
 
     void on_filterQDial_valueChanged(int value);
 
-    void on_oscPitchDial_valueChanged(int value);
-
     void on_attackSlider_valueChanged(int value);
 
     void on_decaySlider_valueChanged(int value);

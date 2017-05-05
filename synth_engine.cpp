@@ -5,7 +5,7 @@
 synthEngine::synthEngine(Ui::MainWindow *_ui)
 {
     osc1 = new Osc(wavetable_sine, DEFAULT_FREQ);
-    filt1 = new Filter(LPF, 1764, 1.0f, 2);
+    filt1 = new Filter(LPF, 1764, 1.0f,2);
     env1 = new ADSR;
     echo1 = new Echo(1.0f, 0.5f, 0.5f);
     ui = _ui;
@@ -73,8 +73,8 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
 
         //acquire new osc value
         myData.left = (short)((osc1->process()*env1->process())/10);
-        myData.left = filt1->filterCompute(myData.left);
         myData.left = echo1->echoEffect(myData.left);
+        myData.left = filt1->filterCompute(myData.left);
         myData.right = myData.left;
 
 

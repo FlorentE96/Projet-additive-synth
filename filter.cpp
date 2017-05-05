@@ -41,7 +41,6 @@ void Filter::setQ(float newQ){
 }
 void Filter::setOrder(uint32_t newOrder){
   order = newOrder;
-  //DesignFilter( filterType );
 }
 
 
@@ -85,8 +84,11 @@ void Filter::DesignFilter( filtType _filterType ){
 }
 void Filter::DesignLPF(void){
 
+  cout << "LPF" << endl;
+
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
   alpha = 0.5f*( sin(wc / Q ));
+
 
   coeff[0] = 0.5f*(1.0f-cos(wc));
   coeff[1] = 1.0f-cos(wc);
@@ -94,12 +96,17 @@ void Filter::DesignLPF(void){
   coeff[3] = 1.0f + alpha;
   coeff[4] = -2.0f*cos(wc);
   coeff[5] = 1.0f - alpha;
+
+
+
 }
 
 void Filter::DesignHPF(void){
 
+
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
   alpha = 0.5f*( sin(wc / Q ));
+
 
   coeff[0] = 0.5f*(1.0f+cos(wc));
   coeff[1] = -1.0f-cos(wc);
@@ -107,12 +114,15 @@ void Filter::DesignHPF(void){
   coeff[3] = 1.0f + alpha;
   coeff[4] = -2.0f*cos(wc);
   coeff[5] = 1.0f - alpha;
+
 }
 
 void Filter::DesignBPF(void){
 
+  cout << "BPF" << endl;
+
   wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha =  sin(wc)*sinh(0.5f*log(2.0f)*bw*(wc/sin(wc)));
+  alpha =  (float)( sin(wc)/(2*Q)); //sinh( (0.5f*log(2.0f)*bw*(wc/sin(wc)) ) ));
 
   coeff[0] = Q*alpha;
   coeff[1] = 0.0f;
@@ -120,6 +130,9 @@ void Filter::DesignBPF(void){
   coeff[3] = 1.0f + alpha;
   coeff[4] = -2.0f*cos(wc);
   coeff[5] = 1.0f - alpha;
+
+
+
 }
 
 Filter::Filter(){
@@ -213,74 +226,4 @@ int16_t Filter::filterCompute(int16_t idata){
   return result;
 }
 
-bool loadArrayFromFile(const char* filename, int16_t* array, uint32_t lenArray){
 
-    string STRING;
-    ifstream file;
-    file.open(filename);
-    if(file.is_open()){
-        for (uint32_t i = 0; i < lenArray; i++) {
-          getline(file,STRING);
-          array[i] = (int16_t)atoi(STRING.c_str());
-        }
-        file.close();
-        return true;
-    }
-    else{
-        return false;
-    }
-
-}
-
-int getLenArrayFromFile(const char* filename){
-  string STRING;
-  ifstream file;
-  file.open(filename);
-  if(file.is_open()){
-      int i = 0;
-      while(file.eof() == 0){
-        getline(file,STRING);
-        i++;
-      }
-      file.close();
-      return i;
-  }
-  cout << "Erreur d'ouverture fichier" << endl;
-  return -1;
-}
-
-
-bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray){
-
-    ofstream file;
-    file.open(filename);
-    file.flush();
-    if(file.is_open()){
-        for (uint32_t i = 0; i < lenArray -1; i++) {
-          file <<  array[i] << endl;
-        }
-        file.close();
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-//int main(int argc, char* argv[]){
-
-//  Filter myFilter(LPF, 2000, 1.0f, 2);
-
-//  int lenArray = getLenArrayFromFile(argv[1]);
-//  int16_t inputArray[lenArray];
-//  loadArrayFromFile(argv[1], inputArray, lenArray);
-
-
-//  int16_t outputArray[lenArray];
-//  for (int i = 0; i < lenArray; i++) {
-//    outputArray[i] = myFilter.filterCompute(inputArray[i]);
-//  }
-//  saveArrayToFile(argv[2], outputArray, lenArray);
-
-//  return 0;
-//}
