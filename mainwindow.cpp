@@ -14,9 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    ui->oscPitchDial->setMaximum(1000);
-    ui->oscPitchDial->setMinimum(50);
-    ui->oscPitchDial->setValue(440);
 
     ui->filterCutoffDial->setMaximum(3000);
     ui->filterCutoffDial->setMinimum(20);
@@ -57,8 +54,9 @@ void MainWindow::on_radioButton_toggled(bool checked)
 void MainWindow::on_radioButton_2_toggled(bool checked)
 {
     if(checked) {
-        synth->filt1->setType(BPF);
         synth->filt1->setBandwidth(100);
+        synth->filt1->setType(BPF);
+
     }
 }
 
@@ -127,11 +125,6 @@ void MainWindow::on_filterQDial_valueChanged(int value)
      ui->lcdRes->display((float)value/100);
 }
 
-void MainWindow::on_oscPitchDial_valueChanged(int value)
-{
-    synth->osc1->setFrequency((uint32_t)value);
-    ui->lcdnumber->display(value);
-}
 
 
 
@@ -158,7 +151,11 @@ void MainWindow::on_releaseSlider_valueChanged(int value)
 
 void MainWindow::on_echoDelay_valueChanged(int value)
 {
+<<<<<<< HEAD
     synth->echo1->setDelayTime((float)value/1000);
+=======
+    synth->echo1->setTd((float)value/100);
+>>>>>>> origin/master
 }
 
 void MainWindow::on_echoFb_valueChanged(int value)

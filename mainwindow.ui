@@ -394,8 +394,8 @@
    <widget class="QDial" name="filterCutoffDial">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>10</y>
+      <x>100</x>
+      <y>20</y>
       <width>101</width>
       <height>81</height>
      </rect>
@@ -404,18 +404,8 @@
    <widget class="QDial" name="filterQDial">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>30</y>
-      <width>50</width>
-      <height>64</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QDial" name="oscPitchDial">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>20</y>
+      <x>210</x>
+      <y>40</y>
       <width>50</width>
       <height>64</height>
      </rect>
@@ -476,8 +466,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>211</x>
-      <y>-1</y>
+      <x>131</x>
+      <y>9</y>
       <width>41</width>
       <height>20</height>
      </rect>
@@ -489,8 +479,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>20</y>
+      <x>220</x>
+      <y>30</y>
       <width>31</width>
       <height>20</height>
      </rect>
@@ -499,106 +489,14 @@
      <string>Res</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>10</y>
-      <width>41</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pitch</string>
-    </property>
-   </widget>
    <widget class="QLCDNumber" name="lcdCutoff">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>90</y>
+      <x>120</x>
+      <y>100</y>
       <width>64</width>
       <height>23</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>8</pointsize>
-     </font>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="lcdnumber">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>90</y>
-      <width>64</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="palette">
-     <palette>
-      <active>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>170</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-       <colorrole role="HighlightedText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>170</red>
-          <green>0</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </active>
-      <inactive>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>170</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-       <colorrole role="HighlightedText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>170</red>
-          <green>0</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </inactive>
-      <disabled>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="96">
-          <red>164</red>
-          <green>166</green>
-          <blue>168</blue>
-         </color>
-        </brush>
-       </colorrole>
-       <colorrole role="HighlightedText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>170</red>
-          <green>0</green>
-          <blue>255</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </disabled>
-     </palette>
     </property>
     <property name="font">
      <font>
@@ -609,8 +507,8 @@
    <widget class="QLCDNumber" name="lcdRes">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>90</y>
+      <x>200</x>
+      <y>100</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -624,8 +522,8 @@
    <widget class="QRadioButton" name="radioButton">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>10</y>
+      <x>370</x>
+      <y>30</y>
       <width>111</width>
       <height>19</height>
      </rect>
@@ -646,8 +544,8 @@
    <widget class="QRadioButton" name="radioButton_2">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>30</y>
+      <x>370</x>
+      <y>50</y>
       <width>101</width>
       <height>19</height>
      </rect>
@@ -662,8 +560,8 @@
    <widget class="QRadioButton" name="radioButton_3">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>50</y>
+      <x>370</x>
+      <y>70</y>
       <width>84</width>
       <height>19</height>
      </rect>
@@ -678,8 +576,8 @@
    <widget class="QRadioButton" name="radioButton_4">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>90</y>
+      <x>370</x>
+      <y>110</y>
       <width>101</width>
       <height>19</height>
      </rect>
@@ -700,8 +598,8 @@
    <widget class="QRadioButton" name="radioButton_5">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>110</y>
+      <x>370</x>
+      <y>130</y>
       <width>131</width>
       <height>19</height>
      </rect>
@@ -754,7 +652,7 @@
    <widget class="QCheckBox" name="echoStatus">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>410</x>
       <y>170</y>
       <width>72</width>
       <height>19</height>
@@ -767,7 +665,7 @@
    <widget class="QDial" name="echoDelay">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>370</x>
       <y>200</y>
       <width>41</width>
       <height>51</height>
@@ -780,7 +678,7 @@
    <widget class="QDial" name="echoFb">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>430</x>
       <y>200</y>
       <width>41</width>
       <height>51</height>
@@ -790,7 +688,7 @@
    <widget class="QDial" name="echoDryWet">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>490</x>
       <y>200</y>
       <width>41</width>
       <height>51</height>
@@ -800,7 +698,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>370</x>
       <y>240</y>
       <width>41</width>
       <height>20</height>
@@ -813,7 +711,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>420</x>
       <y>240</y>
       <width>61</width>
       <height>20</height>
@@ -826,7 +724,7 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>480</x>
       <y>240</y>
       <width>61</width>
       <height>20</height>
