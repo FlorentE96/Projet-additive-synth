@@ -7,7 +7,7 @@ synthEngine::synthEngine(Ui::MainWindow *_ui)
     osc1 = new Osc(wavetable_sine, DEFAULT_FREQ);
     filt1 = new Filter(LPF, 1764, 1.0f, 2);
     env1 = new ADSR;
-    echo1 = new Echo(1.0f, 0.5f, 0.5f);
+    echo1 = new Echo();
     ui = _ui;
 
     midiIn = new RtMidiIn();
@@ -58,7 +58,9 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
 {
     /* Cast data passed through stream to our structure. */
     short* myOut;
-
+    (void) inputBuffer;
+    (void) timeInfo;
+    (void) statusFlags;
     myOut = (short*)outputBuffer;
 
     for( unsigned int i=0; i<framesPerBuffer; i++ )
@@ -73,8 +75,8 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
 
         //acquire new osc value
         myData.left = (short)((osc1->process()*env1->process())/10);
+        myData.left = echo1->process(myData.left);
         myData.left = filt1->filterCompute(myData.left);
-        myData.left = echo1->echoEffect(myData.left);
         myData.right = myData.left;
 
 
@@ -85,16 +87,10 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
 
 void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *message )
 {
-//  unsigned int nBytes = message->size();
-//  for ( unsigned int i=0; i<nBytes; i++ )
-//    std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
-//  if ( nBytes > 0 )
-//    std::cout << "stamp = " << deltatime << std::endl;
-
   uint32_t id_key = (uint32_t)message->at(0);
   uint32_t id_note = (uint32_t)message->at(1);
   uint32_t value = (uint32_t)message->at(2);
-
+  (void) deltatime;
   if(id_key == 144){ //Press Key
         uint32_t frequency;
         if (id_note < 69){

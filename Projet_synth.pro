@@ -29,23 +29,25 @@ SOURCES += main.cpp\
     RtMidi.cpp \
     ADSR.cpp \
     filter.cpp \
-    echo.cpp \
     oscillators.cpp \
     LUTs.cpp \
     synth_engine.cpp \
-    reverb.cpp
+    reverb.cpp \
+    echo.cpp \
+    effect.cpp
 
 HEADERS  += mainwindow.h \
     portaudio.h \
     RtMidi.h \
     ADSR.hpp \
-    effects.hpp \
     filter.hpp \
     global.hpp \
     LUTs.hpp \
     oscillators.hpp \
     synth_engine.hpp \
-    reverb.hpp
+    reverb.hpp \
+    echo.hpp \
+    effect.hpp
 
 FORMS    += mainwindow.ui
 

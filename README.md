@@ -1,16 +1,14 @@
 # ToDo list
 
-- (1)  Filter : generic constructor (to allow bandpass filtering)
-- (2)  Fix Echo
-- (3)  Reverb
-- (4)  Clean inclusion structure
-- (5)  Change setters to initialisation lists
-- (6)  Fix sound "clipping" in LF
-- (7)  Relative pitch dial or ditch Pitc dial
-- (8)  Use MPK Pads to change filter type
-- (9)  Gate problem for 2 notes (retrigger)
-- (10)  Change everything to float/double and see if it improves quality
-- (11) Latency (multithread)
+- (1)  Fix Echo
+- (2)  Reverb
+- (3)  Clean inclusion structure
+- (4)  Change setters to initialisation lists
+- (5)  Fix sound "clipping" in LF
+- (7)  Use MPK Pads to change filter type
+- (8)  Gate problem for 2 notes (retrigger)
+- (9)  Change everything to float/double and see if it improves quality
+- (10) Latency (multithread)
 
 # Substractive synthesizer in C++
 This project consists in creating a basic East coast substractive synthesizer composed of :

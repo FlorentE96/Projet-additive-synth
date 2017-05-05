@@ -31,7 +31,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->releaseSlider->setMaximum(150);
     ui->sustainSlider->setMaximum(1000);
 
+    ui->echoDelay->setMaximum(1000);
+    ui->echoDelay->setMinimum(10);
+    ui->echoDelay->setValue(500);
 
+    ui->echoFb->setMaximum(1000);
+    ui->echoFb->setMinimum(10);
+    ui->echoFb->setValue(500);
 
 }
 
@@ -152,16 +158,16 @@ void MainWindow::on_releaseSlider_valueChanged(int value)
 
 void MainWindow::on_echoDelay_valueChanged(int value)
 {
-    //synth->echo1->setTd((float)value/100);
+    synth->echo1->setDelayTime((float)value/1000);
 }
 
 void MainWindow::on_echoFb_valueChanged(int value)
 {
-    synth->echo1->setFb((float)value/100);
+    synth->echo1->setFeedbackGain((float)value/1000);
 }
 
 void MainWindow::on_echoDryWet_valueChanged(int value)
 {
-    synth->echo1->setDryWet((float)value/100);
+    (void) value;
 }
 

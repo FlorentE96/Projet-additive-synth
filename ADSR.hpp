@@ -17,7 +17,8 @@ typedef enum
     stateRelease
 } State;
 
-class ADSR {
+class ADSR
+{
 public:
   ADSR();
   ADSR(float attack, float decay, float sustain, float release);

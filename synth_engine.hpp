@@ -9,7 +9,7 @@
 #include "filter.hpp"
 #include "ADSR.hpp"
 #include "RtMidi.h"
-#include "effects.hpp"
+#include "echo.hpp"
 #include "mainwindow.h"
 
 class synthEngine
