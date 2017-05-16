@@ -7,16 +7,16 @@ class Echo : public Effect
 {
 public:
     Echo();
-    Echo(double delayTimeSeconds, double feedbackGain);
+    Echo(float delayTimeSeconds, float feedbackGain);
     ~Echo();
-    void setFeedbackGain(double _feedbackGain);
-    void setDelayTime(double _delayTimeSeconds);
+    void setFeedbackGain(float _feedbackGain);
+    void setDelayTime(float _delayTimeSeconds);
     void setStatus(int _status);
-    double process(double in);
+    float process(float in);
 private:
-    long delayTime; // in samples
-    double feedbackGain;
-    long ptr;
+    int delayTime; // in samples
+    float feedbackGain;
+    int ptr;
     int status;
 };
 

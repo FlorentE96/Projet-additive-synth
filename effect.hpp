@@ -9,12 +9,12 @@ using namespace std;
 class Effect {
 public:
     Effect();
-    Effect(long size);
+    Effect(int size);
     ~Effect();
 protected:
-    double * output;
-    double * input;
-    long size;
+    float * output;
+    float * input;
+    int size;
 };
 
 #endif

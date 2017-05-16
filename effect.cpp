@@ -4,17 +4,17 @@
 #define DEFAULT_SIZE (128000)
 
 Effect::Effect() : size(DEFAULT_SIZE) {
-    output = new double[size];
-    input = new double[size];
-    memset( output, 0, size * sizeof( double ));
-    memset( input, 0, size * sizeof( double ));
+    output = new float[size];
+    input = new float[size];
+    memset( output, 0, size * sizeof( float ));
+    memset( input, 0, size * sizeof( float ));
 }
 
-Effect::Effect(long size) : size(DEFAULT_SIZE) {
-    output = new double[size];
-    input = new double[size];
-    memset( output, 0, size * sizeof( double ));
-    memset( input, 0, size * sizeof( double ));
+Effect::Effect(int size) : size(DEFAULT_SIZE) {
+    output = new float[size];
+    input = new float[size];
+    memset( output, 0, size * sizeof( float ));
+    memset( input, 0, size * sizeof( float ));
 }
 
 Effect::~Effect() {
