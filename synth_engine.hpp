@@ -28,20 +28,20 @@ public:
     ADSR * env1;
     Echo * echo1;
 
-    void mycallback( double deltatime, std::vector< unsigned char > *message);
+    void myMidiCallback( double deltatime, std::vector< unsigned char > *message);
 
-    static void s_mycallback( double deltatime, std::vector< unsigned char > *message, void *userData )
+    static void myStaticMidiCallback( double deltatime, std::vector< unsigned char > *message, void *userData )
     {
-        ((synthEngine*)userData)->mycallback(deltatime, message);
+        ((synthEngine*)userData)->myMidiCallback(deltatime, message);
     }
 
 
-    int myMemberCallback(const void *input, void *output,
+    int mySoundCallback(const void *input, void *output,
       unsigned long frameCount,
       const PaStreamCallbackTimeInfo* timeInfo,
       PaStreamCallbackFlags statusFlags);
 
-    static int myPaCallback(
+    static int myStaticSoundCallback(
       const void *input, void *output,
       unsigned long frameCount,
       const PaStreamCallbackTimeInfo* timeInfo,
@@ -49,7 +49,7 @@ public:
       void *userData )
     {
       return ((synthEngine*)userData)
-         ->myMemberCallback(input, output, frameCount, timeInfo, statusFlags);
+         ->mySoundCallback(input, output, frameCount, timeInfo, statusFlags);
     }
 	
 

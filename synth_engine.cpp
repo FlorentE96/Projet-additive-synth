@@ -16,7 +16,7 @@ synthEngine::synthEngine(Ui::MainWindow *_ui)
     }
     else{
         midiIn->openPort( 0 );
-        midiIn->setCallback( &synthEngine::s_mycallback, (void *)this);
+        midiIn->setCallback( &synthEngine::myStaticMidiCallback, (void *)this);
         midiIn->ignoreTypes( false, false, false );
     }
 
@@ -28,7 +28,7 @@ synthEngine::synthEngine(Ui::MainWindow *_ui)
                                 paInt16,  /* 16 bit int output */
                                 SAMPLE_RATE,
                                 256,        /* frames per buffer */
-                                &synthEngine::myPaCallback, /*routine to execute when audio is needed */
+                                &synthEngine::myStaticSoundCallback, /*routine to execute when audio is needed */
                                 this ); /*static structure representing left and right channel samples */
 
     Pa_StartStream( stream );
@@ -50,18 +50,18 @@ synthEngine::~synthEngine()
 
 }
 
-int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
+int synthEngine::mySoundCallback( const void *inputBuffer, void *outputBuffer,
                            unsigned long framesPerBuffer,
                            const PaStreamCallbackTimeInfo* timeInfo,
                            PaStreamCallbackFlags statusFlags
                                    )
 {
     /* Cast data passed through stream to our structure. */
-    short* myOut;
+    uint16_t* myOut;
     (void) inputBuffer;
     (void) timeInfo;
     (void) statusFlags;
-    myOut = (short*)outputBuffer;
+    myOut = (uint16_t*)outputBuffer;
 
     for( unsigned int i=0; i<framesPerBuffer; i++ )
 
@@ -74,8 +74,8 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
               /*************** compute new values ******************/
 
         //acquire new osc value
-        myData.left = (short)((osc1->process()*env1->process())/10);
-        myData.left = echo1->process(myData.left);
+        myData.left = (uint16_t)((osc1->process()*env1->process())/10);
+        myData.left = (uint16_t)echo1->process(myData.left);
         myData.left = filt1->filterCompute(myData.left);
         myData.right = myData.left;
 
@@ -85,7 +85,7 @@ int synthEngine::myMemberCallback( const void *inputBuffer, void *outputBuffer,
     return paContinue;
 }
 
-void synthEngine::mycallback( double deltatime, std::vector< unsigned char > *message )
+void synthEngine::myMidiCallback( double deltatime, std::vector< unsigned char > *message )
 {
   static uint32_t gate = 0;
   static uint32_t freq_buf[10];
