@@ -1,6 +1,6 @@
 #include "filter.hpp"
 
-
+// setter used at initialization
 void Filter::setType_Init(filtType newFilterType){
   filterType = newFilterType;
 }
@@ -17,10 +17,6 @@ void Filter::setQ_Init(float newQ){
 void Filter::setOrder_Init(uint32_t newOrder){
   order = newOrder;
 }
-void Filter::setFs_Init(){
-  Fs = SAMPLE_RATE;
-}
-
 
 
 void Filter::setType( filtType newFilterType) {
@@ -84,10 +80,9 @@ void Filter::DesignFilter( filtType _filterType ){
 }
 void Filter::DesignLPF(void){
 
-  cout << "LPF" << endl;
 
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha = 0.5f*( sin(wc / Q ));
+  float wc = 2*M_PI*( ((float)Fc)/((float)SAMPLE_RATE) );
+  float alpha = 0.5f*( sin(wc / Q ));
 
 
   coeff[0] = 0.5f*(1.0f-cos(wc));
@@ -104,8 +99,8 @@ void Filter::DesignLPF(void){
 void Filter::DesignHPF(void){
 
 
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha = 0.5f*( sin(wc / Q ));
+  float wc = 2*M_PI*( ((float)Fc)/((float)SAMPLE_RATE) );
+  float alpha = 0.5f*( sin(wc / Q ));
 
 
   coeff[0] = 0.5f*(1.0f+cos(wc));
@@ -121,8 +116,8 @@ void Filter::DesignBPF(void){
 
   cout << "BPF" << endl;
 
-  wc = 2*M_PI*( ((float)Fc)/((float)Fs) );
-  alpha =  (float)( sin(wc)/(2*Q)); //sinh( (0.5f*log(2.0f)*bw*(wc/sin(wc)) ) ));
+  float wc = 2*M_PI*( ((float)Fc)/((float)SAMPLE_RATE) );
+  float alpha =  (float)( sin(wc)/(2*Q)); //sinh( (0.5f*log(2.0f)*bw*(wc/sin(wc)) ) ));
 
   coeff[0] = Q*alpha;
   coeff[1] = 0.0f;
@@ -140,7 +135,6 @@ Filter::Filter(){
   setFc_Init(DEFAULT_FC);
   setQ_Init(DEFAULT_Q);
   setType_Init(LPF);
-  setFs_Init();
 
   DesignLPF();
 
@@ -150,7 +144,6 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order ){
   setFc_Init(_Fc);
   setQ_Init(_Q);
   setType_Init(_filterType);
-  setFs_Init();
 
   DesignFilter( filterType );
 
@@ -163,7 +156,6 @@ Filter::Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint3
   setQ_Init(_Q);
   setBandwidth_Init(_bw);
   setType_Init(_filterType);
-  setFs_Init();
 
   DesignFilter( filterType );
 }
@@ -172,18 +164,6 @@ Filter::~Filter(){
 
 }
 
-void Filter::filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen){
-  for(uint32_t i = 0; i < iLen; i++){
-      if(i<2){
-        oarray[i] = 0;
-      }
-      else {
-        oarray[i] =(int16_t)( (coeff[0]/coeff[3])*iarray[i] + (coeff[1]/coeff[3])*iarray[i-1] + (coeff[2]/coeff[3])*iarray[i-2] - (coeff[4]/coeff[3])*oarray[i-1] - (coeff[5]/coeff[3])*oarray[i-2] );
-      }
-
-  }
-
-}
 
 int16_t Filter::filterCompute(int16_t idata){
   int16_t result = 0;

@@ -21,23 +21,19 @@ enum filtType {LPF, HPF, BPF};
 
 class Filter{
 private:
-
   float coeff[6];   //6 coefficients for biquad filter design
   filtType filterType; //lowpass, bandpass, highpass
   uint32_t Fc; //cut-off frequency or center frequency for BPF case
-  uint32_t Fs; //sampling frequency
   uint32_t bw;
   uint32_t order; //filter order (2 or 4)
   float Q; //quality factor
-  float alpha;
-  float wc; //normalized cut-off frequency
 
-  void DesignFilter( filtType _filterType);
+  void DesignFilter(filtType _filterType);
+  
   // filling filter coefficients array regarding filter type and parameters given
   void DesignLPF(void);
   void DesignHPF(void);
   void DesignBPF(void);
-  void setFs_Init();
 
   void setType_Init(filtType newFilterType);
   void setFc_Init(uint32_t newFc);
@@ -53,7 +49,6 @@ public:
 
   Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _order);
   Filter(filtType _filterType, uint32_t _Fc, float _Q, uint32_t _bw, uint32_t _order);
-
 
   //destructors
   ~Filter();
@@ -75,13 +70,9 @@ public:
   float getCoeff(uint32_t i);
 
   //other functions
-  void filterArrayCompute(int16_t* iarray, int16_t* oarray, uint32_t iLen);
   int16_t filterCompute(int16_t idata);
 
 };
 
-bool loadArrayFromFile(const char* filename, int16_t* array, uint32_t lenArray);
-int getLenArrayFromFile(const char* filename);
-bool saveArrayToFile(const char* filename, int16_t* array, uint32_t lenArray);
 
 #endif
