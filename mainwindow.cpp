@@ -151,11 +151,8 @@ void MainWindow::on_releaseSlider_valueChanged(int value)
 
 void MainWindow::on_echoDelay_valueChanged(int value)
 {
-<<<<<<< HEAD
     synth->echo1->setDelayTime((float)value/1000);
-=======
-    synth->echo1->setTd((float)value/100);
->>>>>>> origin/master
+
 }
 
 void MainWindow::on_echoFb_valueChanged(int value)
